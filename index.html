@@ -781,10 +781,11 @@
       inset: auto;
       min-height: 0;
       grid-template-columns: 1fr;
-      grid-template-rows: auto minmax(660px, 78svh);
+      grid-template-rows: auto minmax(500px, 62svh) auto;
       grid-template-areas:
         "header"
-        "stage";
+        "stage"
+        "info-bar";
     }
 
     .panel {
@@ -899,10 +900,11 @@
 
     /* Mobile reading panel sits below the map in the normal page flow. */
     .app {
-      grid-template-rows: auto minmax(660px, 78svh);
+      grid-template-rows: auto minmax(500px, 62svh) auto;
       grid-template-areas:
         "header"
-        "stage";
+        "stage"
+        "info-bar";
     }
     .info-bar {
       display: flex !important;
@@ -2453,6 +2455,14 @@ app.classList.add('mode-stack');
 layoutAll();
 applyToggles();
 renderEmptyPanel();
+
+// ── iframe auto-resize (postMessage to parent) ──
+function reportHeightToParent() {
+  const h = document.documentElement.scrollHeight;
+  window.parent.postMessage({ type: 'iframeHeight', height: h }, '*');
+}
+window.addEventListener('load', reportHeightToParent);
+new ResizeObserver(reportHeightToParent).observe(document.body);
 </script>
 </body>
 </html>

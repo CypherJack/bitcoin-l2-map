@@ -1,4 +1,4 @@
-<!doctype html> 
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -40,13 +40,13 @@
     font-weight: 400;
     font-size: 15px;
     line-height: 1.55;
-    overflow: hidden;
-    height: 100vh;
+    overflow-x: hidden;
   }
 
   .app {
-    position: fixed;
-    inset: 0;
+    position: relative;
+    width: 100%;
+    min-height: 100svh;
     display: grid;
     grid-template-columns: 1fr minmax(25%, 360px);
     grid-template-rows: auto 1fr auto;
@@ -402,7 +402,7 @@
     grid-area: panel;
     border-left: 1px solid var(--line);
     background: var(--bg);
-    overflow-y: auto;
+    overflow: visible;
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -670,7 +670,7 @@
 
   /* ---- TWEAKS PANEL ---- */
   .tweaks {
-    position: fixed;
+    position: absolute;
     bottom: 60px;
     right: 24px;
     width: 280px;
@@ -779,9 +779,9 @@
     .app {
       position: relative;
       inset: auto;
-      min-height: 100svh;
+      min-height: 0;
       grid-template-columns: 1fr;
-      grid-template-rows: auto minmax(660px, calc(100svh - 112px));
+      grid-template-rows: auto minmax(660px, 78svh);
       grid-template-areas:
         "header"
         "stage";
@@ -797,6 +797,8 @@
       transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
       border-left: none;
       border-top: none;
+      display: flex;
+      overflow-y: auto;
     }
 
     .panel.panel-open {
@@ -897,7 +899,7 @@
 
     /* Mobile reading panel sits below the map in the normal page flow. */
     .app {
-      grid-template-rows: auto minmax(660px, calc(100svh - 112px));
+      grid-template-rows: auto minmax(660px, 78svh);
       grid-template-areas:
         "header"
         "stage";
@@ -928,8 +930,8 @@
     flex-direction: row;
     background: var(--bg);
     border-top: 1px solid var(--line);
-    overflow-y: auto;
-    max-height: 35vh;
+    overflow: visible;
+    max-height: none;
   }
   .info-bar-col {
     flex: 1;

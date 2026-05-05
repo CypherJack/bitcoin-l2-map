@@ -772,7 +772,7 @@
     body {
       height: auto;
       min-height: 100%;
-      overflow: auto;
+      overflow: hidden;
       overflow-x: hidden;
     }
 
@@ -2455,14 +2455,6 @@ app.classList.add('mode-stack');
 layoutAll();
 applyToggles();
 renderEmptyPanel();
-
-// ── iframe auto-resize (postMessage to parent) ──
-function reportHeightToParent() {
-  const h = document.documentElement.scrollHeight;
-  window.parent.postMessage({ type: 'iframeHeight', height: h }, '*');
-}
-window.addEventListener('load', reportHeightToParent);
-new ResizeObserver(reportHeightToParent).observe(document.body);
 </script>
 </body>
 </html>

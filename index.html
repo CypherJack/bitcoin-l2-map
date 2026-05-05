@@ -929,8 +929,8 @@
     }
     .info-bar-col:last-child { border-bottom: none; }
 
-    /* Strates : 4 rows régulières de 25% — étiquette à 2% du haut de la row,
-       nodes centrés à 13% du haut de la row (cf. stackPositions JS) */
+    /* Strata: 4 evenly distributed 25% rows — tier label at 2% from the row top,
+       nodes centered at 13% from the row top (see stackPositions JS) */
     .stratum.tier-2  { --t: 0.02 !important; }
     .stratum.tier-15 { --t: 0.27 !important; }
     .stratum.tier-ln { --t: 0.52 !important; }
@@ -1311,7 +1311,7 @@ const NODES = [
     category: 'channel',
     consensus: 'ASP-coordinated rounds · shared output tree',
     bridge: 'Native - unilateral exit to L1 after timeout',
-    body: 'Ark batches many users into shared on-chain outputs coordinated by an Ark Service Provider. Users hold « virtual » UTXOs they can spend instantly off-chain and unilaterally redeem on Bitcoin if the ASP misbehaves. No channel liquidity to manage.',
+    body: 'Ark batches many users into shared on-chain outputs coordinated by an Ark Service Provider. Users hold "virtual" UTXOs they can spend instantly off-chain and unilaterally redeem on Bitcoin if the ASP misbehaves. No channel liquidity to manage.',
     bridgePath: ['BTC', 'ASP Round Tx', 'vUTXO', 'Ark Payment']
   },
   {
@@ -1392,27 +1392,27 @@ const NODES = [
 
 const EDGES = [
   // L1 → L1.5
-  { from: 'btc', to: 'ln',     kind: 'Peg par canal HTLC',     style: 'solid' },
-  { from: 'btc', to: 'ark',    kind: 'Round UTXO partagé',     style: 'solid' },
-  { from: 'btc', to: 'spark',  kind: 'Tx de financement Lightning', style: 'solid' },
-  { from: 'btc', to: 'rgb',    kind: 'Scellé à usage unique',  style: 'solid' },
-  { from: 'btc', to: 'bitvm',  kind: 'Primitive de script',    style: 'cryptographic' },
+  { from: 'btc', to: 'ln',     kind: 'HTLC channel peg',       style: 'solid' },
+  { from: 'btc', to: 'ark',    kind: 'Shared UTXO round',      style: 'solid' },
+  { from: 'btc', to: 'spark',  kind: 'Lightning funding tx',   style: 'solid' },
+  { from: 'btc', to: 'rgb',    kind: 'Single-use seal',        style: 'solid' },
+  { from: 'btc', to: 'bitvm',  kind: 'Script primitive',       style: 'cryptographic' },
   // L1 → L2
-  { from: 'btc', to: 'liquid', kind: 'Peg fédéré (11/15)',     style: 'dashed' },
-  { from: 'btc', to: 'rsk',    kind: 'PowPeg · merge-miné',    style: 'dashed' },
-  { from: 'btc', to: 'citrea', kind: 'Bridge BitVM',           style: 'cryptographic' },
-  { from: 'btc', to: 'fedi',     kind: 'Multisig fédéré',        style: 'dashed' },
-  { from: 'btc', to: 'ordinals', kind: 'Données witness intégrées', style: 'solid' },
-  // Connexions via passerelle LN
-  { from: 'ln',  to: 'ark',    kind: 'Passerelle LN',          style: 'dotted', secondary: true },
-  { from: 'ln',  to: 'spark',  kind: 'Passerelle LN',          style: 'dotted', secondary: true },
-  { from: 'ln',  to: 'rgb',    kind: 'Transporte les actifs RGB', style: 'dotted', secondary: true },
-  { from: 'ln',  to: 'liquid', kind: 'Passerelle LN',          style: 'dotted', secondary: true },
-  { from: 'ln',  to: 'rsk',    kind: 'Passerelle LN',          style: 'dotted', secondary: true },
-  { from: 'ln',  to: 'citrea', kind: 'Passerelle LN',          style: 'dotted', secondary: true },
-  { from: 'ln',  to: 'fedi',   kind: 'Passerelle LN entrée/sortie', style: 'dotted', secondary: true },
+  { from: 'btc', to: 'liquid', kind: 'Federated peg (11/15)',  style: 'dashed' },
+  { from: 'btc', to: 'rsk',    kind: 'PowPeg · merge-mined',   style: 'dashed' },
+  { from: 'btc', to: 'citrea', kind: 'BitVM bridge',           style: 'cryptographic' },
+  { from: 'btc', to: 'fedi',     kind: 'Federated multisig',     style: 'dashed' },
+  { from: 'btc', to: 'ordinals', kind: 'Embedded witness data',  style: 'solid' },
+  // LN gateway connections
+  { from: 'ln',  to: 'ark',    kind: 'LN gateway',             style: 'dotted', secondary: true },
+  { from: 'ln',  to: 'spark',  kind: 'LN gateway',             style: 'dotted', secondary: true },
+  { from: 'ln',  to: 'rgb',    kind: 'Carries RGB assets',     style: 'dotted', secondary: true },
+  { from: 'ln',  to: 'liquid', kind: 'LN gateway',             style: 'dotted', secondary: true },
+  { from: 'ln',  to: 'rsk',    kind: 'LN gateway',             style: 'dotted', secondary: true },
+  { from: 'ln',  to: 'citrea', kind: 'LN gateway',             style: 'dotted', secondary: true },
+  { from: 'ln',  to: 'fedi',   kind: 'LN in/out gateway',      style: 'dotted', secondary: true },
   // L1.5 cross
-  { from: 'bitvm', to: 'citrea', kind: 'Vérifie l’état du rollup', style: 'cryptographic', secondary: true }
+  { from: 'bitvm', to: 'citrea', kind: 'Verifies rollup state', style: 'cryptographic', secondary: true }
 ];
 
 // ── Layout positions (normalized 0..1) ──
@@ -1420,7 +1420,7 @@ function stackPositions(stageWidth) {
   const pos = {};
   const isMobile = stageWidth && stageWidth < 769;
 
-  // Mobile : 4 rows régulières de 25%, nodes centrés à 13% du haut de chaque row.
+  // Mobile: 4 evenly distributed 25% rows, nodes centered at 13% from the top of each row.
   //   Tier 2     row 0–25%   → nodes y=0.15
   //   Tier 1.5   row 25–50%  → nodes y=0.40
   //   Tier LN    row 50–75%  → nodes y=0.65

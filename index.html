@@ -836,6 +836,56 @@
       font-size: 10px;
       top: calc(100% + 8px);
     }
+
+    /* Info bar — visible only on mobile, below the map */
+    body { overflow-y: auto; height: auto; }
+    .app {
+      position: relative;
+      min-height: 100svh;
+      inset: auto;
+    }
+    .stage { min-height: 60svh; }
+    .info-bar { display: flex; }
+  }
+
+  /* Info bar — hidden on desktop */
+  .info-bar {
+    display: none;
+    flex-direction: row;
+    gap: 0;
+    background: var(--bg);
+    border-top: 1px solid var(--line);
+  }
+  .info-bar-col {
+    flex: 1;
+    padding: 24px 20px;
+    border-right: 1px solid var(--line);
+  }
+  .info-bar-col:last-child { border-right: none; }
+  .info-bar-col h3 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    margin: 0 0 12px;
+  }
+  .info-bar-col p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--fg);
+    margin: 0;
+  }
+  .info-bar-col p em { font-style: italic; color: var(--fg-dim); }
+  .info-bar-col .legend { margin-top: 0; }
+  .info-bar-col .legend-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: var(--fg);
   }
 </style>
 </head>
@@ -891,6 +941,23 @@
   <div class="nav" style="display:none">
       <button id="tk-open">Tweaks ◹</button>
     </div>
+</div>
+
+<!-- Info bar — mobile only, below the map -->
+<div class="info-bar" id="info-bar">
+  <div class="info-bar-col">
+    <h3>Reading the map</h3>
+    <p>Bitcoin sits at the base — everything above it is a compromise on a single axis: <em>how much you trust something other than Bitcoin itself</em>.</p>
+  </div>
+  <div class="info-bar-col">
+    <h3>Edge legend</h3>
+    <div class="legend">
+      <div class="legend-row"><svg width="36" height="6"><line x1="0" y1="3" x2="36" y2="3" stroke="#aaa" stroke-width="1"/></svg><span>Native / trust-minimized peg</span></div>
+      <div class="legend-row"><svg width="36" height="6"><line x1="0" y1="3" x2="36" y2="3" stroke="#aaa" stroke-width="1" stroke-dasharray="4 4"/></svg><span>Federated / multi-sig peg</span></div>
+      <div class="legend-row"><svg width="36" height="6"><line x1="0" y1="3" x2="36" y2="3" stroke="#aaa" stroke-width="1" stroke-dasharray="1.5 4"/></svg><span>Lightning connection</span></div>
+      <div class="legend-row"><svg width="36" height="6"><line x1="0" y1="3" x2="36" y2="3" stroke="#aaa" stroke-width="1" stroke-dasharray="10 5"/></svg><span>Cryptographic peg</span></div>
+    </div>
+  </div>
 </div>
 
 <!-- Tweaks panel -->
@@ -1107,7 +1174,7 @@ const NODES = [
     category: null,
     consensus: 'Nakamoto · Proof-of-Work (SHA-256)',
     bridge: null,
-    body: 'All layers above inherit their ultimate security from Bitcoin. Every L2 is a bet on how to scale, privatize, or program around Bitcoin\'s deliberately conservative base layer without compromising the settlement guarantee beneath them.',
+    body: 'All layers above inherit (somehow) their security from the way they interact with the Bitcoin blockchain. Every L2 is a bet on how to scale, privatize, or program around Bitcoin\'s deliberately conservative base layer without compromising the settlement guarantee beneath them.',
     bridgePath: null
   },
   {
@@ -1119,19 +1186,19 @@ const NODES = [
     category: 'channel',
     consensus: 'Bilateral payment channels · HTLCs · onion routing',
     bridge: 'Native — funded by on-chain multisig UTXO',
-    body: 'Lightning moves value between parties without broadcasting each payment, settling only the net result back to Bitcoin. Trust is minimized: either counterparty can unilaterally close a channel and reclaim funds on L1 at any time.',
+    body: 'Lightning moves value between parties without broadcasting each payment, settling only the net result back to Bitcoin. Trust is minimized: either counterparty can unilaterally close a channel and reclaim funds on L1 without permission.',
     bridgePath: ['BTC UTXO', '2-of-2 Funding Tx', 'Channel', 'Lightning Payment']
   },
   {
     id: 'liquid',
     name: 'Liquid',
     symbol: 'L-BTC',
-    short: 'Federated sidechain by Blockstream.',
-    tagline: 'Confidential transactions, faster blocks.',
+    short: 'Federated sidechain.',
+    tagline: 'Confidential transactions, 2 minutes block time.',
     category: 'sidechain',
     consensus: 'Strong Federation · 15 functionaries · 1-min blocks',
     bridge: 'Federated peg — 11-of-15 signers custody',
-    body: 'Liquid is a production federated sidechain optimized for exchanges and issuers. It trades sovereignty for throughput and confidentiality: the functionary federation holds pegged BTC and signs off on block production.',
+    body: 'Liquid is a production federated sidechain optimized for token issuers. It trades Bitcoin\'s decentralisation for throughput and confidentiality: the functionary federation holds pegged BTC and signs off on block production.',
     bridgePath: ['BTC', 'Federation Peg-in', 'L-BTC', 'Liquid Network']
   },
   {
@@ -1155,7 +1222,7 @@ const NODES = [
     category: 'channel',
     consensus: 'ASP-coordinated rounds · shared output tree',
     bridge: 'Native — unilateral exit to L1 after timeout',
-    body: 'Ark batches many users into shared on-chain outputs coordinated by an Ark Service Provider. Users hold virtual UTXOs they can spend instantly off-chain and unilaterally redeem on Bitcoin if the ASP misbehaves. No channel liquidity to manage.',
+    body: 'Ark batches many users into shared on-chain outputs coordinated by an Ark Service Provider. Users hold « virtual » UTXOs they can spend instantly off-chain and unilaterally redeem on Bitcoin if the ASP misbehaves. No channel liquidity to manage.',
     bridgePath: ['BTC', 'ASP Round Tx', 'vUTXO', 'Ark Payment']
   },
   {
@@ -1163,7 +1230,7 @@ const NODES = [
     name: 'Citrea',
     symbol: 'ZK',
     short: 'Zero-knowledge rollup on Bitcoin.',
-    tagline: 'EVM execution, verified by Bitcoin.',
+    tagline: 'EVM execution, verified by BitVM.',
     category: 'rollup',
     consensus: 'ZK rollup · zkEVM · data posted as inscriptions',
     bridge: 'BitVM-based optimistic bridge',
@@ -1178,7 +1245,7 @@ const NODES = [
     tagline: 'Any program, verified by challenge.',
     category: 'rollup',
     consensus: 'Optimistic fraud proofs · two-party covenants',
-    bridge: 'Mechanism, not a chain — enables trust-minimized pegs',
+    bridge: 'It\'s a mechanism, not a chain — enables trust-minimized pegs',
     body: 'BitVM is not a chain — it is a research primitive that lets Bitcoin verify arbitrary programs via fraud proofs between a prover and a verifier. It powers the next generation of trust-minimized bridges used by rollups like Citrea.',
     bridgePath: ['Prover', 'Taproot Script', 'Challenge', 'Verifier']
   },
@@ -1191,7 +1258,7 @@ const NODES = [
     category: 'channel',
     consensus: 'Service-provider coordinated liquidity · Lightning routing',
     bridge: 'Native — Lightning settlement with on-chain withdrawal',
-    body: 'Spark provides users with balances backed by Lightning liquidity managed by a service provider. Payments are routed across the Lightning Network without requiring users to open or manage channels themselves. Users can move funds instantly within the network and withdraw back to Bitcoin on-chain when needed. No channel operations required at the user level.',
+    body: 'Spark allows users to hold balances backed by Lightning liquidity without managing channels. Payments are routed automatically, and funds remain withdrawable on-chain at any time. The model relies on key sharing, the user and the service provider each hold a portion, reducing unilateral control, especially after the provider\'s key is supposedly removed.',
     bridgePath: ['BTC', 'Funding Tx', 'Lightning Liquidity Pool', 'Spark Balance', 'Lightning Payment']
   },
   {
@@ -1201,7 +1268,7 @@ const NODES = [
     short: 'Client-side assets on Bitcoin & Lightning.',
     tagline: 'Smart contracts that live off-chain.',
     category: 'client',
-    consensus: 'Client-side validation · single-use seals (UTXOs)',
+    consensus: 'Client-side validation · cryptographic single-use seals (UTXOs)',
     bridge: 'Anchored in Bitcoin UTXOs; data kept by users',
     body: 'RGB flips the model: contract state lives with its owners, not on-chain. Bitcoin UTXOs act as single-use seals that commit to off-chain state transitions. Scales without bloating the chain, at the cost of peer-to-peer data exchange.',
     bridgePath: ['BTC UTXO (seal)', 'Commitment', 'Client State', 'RGB Asset']

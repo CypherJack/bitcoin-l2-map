@@ -789,7 +789,7 @@
       height: auto;
       min-height: 0;
       grid-template-columns: 1fr;
-      grid-template-rows: auto minmax(500px, 62svh) auto;
+      grid-template-rows: auto minmax(440px, 62svh) auto;
       grid-template-areas:
         "header"
         "stage"
@@ -883,6 +883,9 @@
 
     .stratum-rail .tier-name {
       white-space: nowrap !important;
+      font-size: 9.5px;
+      letter-spacing: 0.14em;
+      padding: 3px 8px;
     }
 
     .stratum-rail br {
@@ -908,7 +911,7 @@
 
     /* Mobile reading panel sits below the map in the normal page flow. */
     .app {
-      grid-template-rows: auto minmax(500px, 62svh) auto;
+      grid-template-rows: auto minmax(440px, 62svh) auto;
       grid-template-areas:
         "header"
         "stage"
@@ -926,11 +929,12 @@
     }
     .info-bar-col:last-child { border-bottom: none; }
 
-    /* Strates : aligner avec les nouvelles positions JS */
-    .stratum.tier-2  { --t: 0.07 !important; }
-    .stratum.tier-15 { --t: 0.30 !important; }
-    .stratum.tier-ln { --t: 0.58 !important; }
-    .stratum.tier-1  { --t: 0.82 !important; }
+    /* Strates : 4 rows régulières de 25% — étiquette à 2% du haut de la row,
+       nodes centrés à 13% du haut de la row (cf. stackPositions JS) */
+    .stratum.tier-2  { --t: 0.02 !important; }
+    .stratum.tier-15 { --t: 0.27 !important; }
+    .stratum.tier-ln { --t: 0.52 !important; }
+    .stratum.tier-1  { --t: 0.77 !important; }
   }
 
   /* Info bar — desktop: masqué */
@@ -1416,8 +1420,13 @@ function stackPositions(stageWidth) {
   const pos = {};
   const isMobile = stageWidth && stageWidth < 769;
 
-  pos.btc = { x: 0.50, y: isMobile ? 0.91 : 0.87 };
-  pos.ln  = { x: 0.50, y: isMobile ? 0.67 : 0.62 };
+  // Mobile : 4 rows régulières de 25%, nodes centrés à 13% du haut de chaque row.
+  //   Tier 2     row 0–25%   → nodes y=0.15
+  //   Tier 1.5   row 25–50%  → nodes y=0.40
+  //   Tier LN    row 50–75%  → nodes y=0.65
+  //   Tier 1     row 75–100% → nodes y=0.90
+  pos.btc = { x: 0.50, y: isMobile ? 0.90 : 0.87 };
+  pos.ln  = { x: 0.50, y: isMobile ? 0.65 : 0.62 };
 
   // Mobile: full width with padding. Desktop: keep clear of stratum-rail
   const minXNorm = isMobile ? 0.15 : (stageWidth ? (16 + 200 + 28 + 12) / stageWidth : 0.28);
@@ -1426,12 +1435,12 @@ function stackPositions(stageWidth) {
 
   const tier15 = ['ark', 'spark', 'rgb', 'bitvm', 'ordinals'];
   tier15.forEach((id, i) => {
-    pos[id] = { x: colX(i, tier15.length), y: isMobile ? 0.41 : 0.37 };
+    pos[id] = { x: colX(i, tier15.length), y: isMobile ? 0.40 : 0.37 };
   });
 
   const tier2 = ['liquid', 'rsk', 'citrea', 'fedi'];
   tier2.forEach((id, i) => {
-    pos[id] = { x: colX(i, tier2.length), y: isMobile ? 0.19 : 0.12 };
+    pos[id] = { x: colX(i, tier2.length), y: isMobile ? 0.15 : 0.12 };
   });
 
   return pos;

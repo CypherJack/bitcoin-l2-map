@@ -1343,7 +1343,7 @@ const NODES = [
     category: 'channel',
     consensus: 'Liquidité coordonnée par un fournisseur · routage Lightning',
     bridge: 'Natif - règlement Lightning avec retrait on-chain',
-    body: 'Spark permet d\'utiliser des soldes adossés à la liquidité Lightning sans gérer de canaux. Les paiements sont routés automatiquement et les fonds restent retirables on-chain à tout moment. Le modèle repose sur un partage de clé : l\'utilisateur et le fournisseur en détiennent chacun une partie, réduisant le contrôle unilatéral, notamment après la suppression supposée de la clé du fournisseur.',
+    body: 'Spark permet d\'utiliser des soldes adossés à la liquidité Lightning sans gérer de canaux. Les paiements sont automatisés et les fonds restent retirables on-chain à tout moment. Le modèle repose sur un partage de clé entre l\'utilisateur et le fournisseur, limitant le contrôle unilatéral tout en simplifiant l\'expérience.',
     bridgePath: ['BTC', 'transaction de financement', 'pool Lightning', 'solde Spark', 'paiement Lightning']
   },
   {
@@ -1355,7 +1355,7 @@ const NODES = [
     category: 'client',
     consensus: 'Validation côté client · sceau cryptographique à usage unique (UTXOs)',
     bridge: 'Ancré dans les UTXO Bitcoin',
-    body: 'RGB déplace l\'état des contrats hors chaîne. Les UTXO servent de scellés pour valider les transitions d\'état.',
+    body: 'RGB inverse le modèle : l\'état des contrats est détenu par leurs propriétaires, et non stocké on-chain. Les UTXO de Bitcoin servent de sceaux à usage unique pour engager des transitions d\'état hors chaîne. Cela permet de scaler sans alourdir la blockchain, au prix d\'échanges de données en pair-à-pair.',
     bridgePath: ['UTXO (scellés)', 'engagement', 'état client', 'transaction RGB']
   },
   {
@@ -1367,7 +1367,7 @@ const NODES = [
     category: 'ecash',
     consensus: 'Tokens émis par un mint · signatures chaumiennes',
     bridge: 'Convertibles en BTC via le mint (souvent via Lightning)',
-    body: 'Les systèmes d’e-cash utilisent des signatures aveugles chaumiennes pour permettre aux utilisateurs de détenir et transférer des jetons adossés à Bitcoin de manière privée et instantanée. Les transactions se déroulent off-chain, sans laisser de trace publique sur Bitcoin ou le Lightning Network. Les utilisateurs peuvent convertir leurs jetons en BTC via le mint émetteur. Cashu repose sur un mint à opérateur unique, optimisant la simplicité et la rapidité de déploiement. Fedimint répartit la garde entre une fédération de gardiens, réduisant le risque lié à un point de confiance unique, au prix d’une complexité de coordination plus élevée.',
+    body: 'Les systèmes d’e-cash utilisent des signatures aveugles pour permettre des paiements privés et instantanés en Bitcoin, sans trace on-chain. Les jetons peuvent être reconvertis en BTC via un mint. Cashu repose sur un opérateur unique, tandis que Fedimint distribue la garde entre plusieurs acteurs, réduisant le risque au prix de plus de complexité.',
     bridgePath: ['BTC', 'dépôt', 'token e-cash', 'paiement privé'],
     subtitle: 'Cashu · Fedimint'
   },

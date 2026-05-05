@@ -10,14 +10,22 @@
 
 <style>
   :root {
-    --bg: hsl(0, 0%, 7%);
-    --bg-2: hsl(0, 0%, 10%);
-    --bg-3: hsl(0, 0%, 13%);
-    --line: hsl(0, 0%, 20%);
-    --line-strong: hsl(0, 0%, 30%);
-    --fg: hsl(0, 0%, 96%);
-    --fg-dim: hsl(0, 0%, 66%);
-    --fg-dimmer: hsl(0, 0%, 44%);
+    color-scheme: light dark;
+
+    /* Off-Chain Media design tokens */
+    --light--background: #ffffff;
+    --dark--background:  hsla(0, 0%, 10%, 1);
+    --light--text:       hsla(0, 0%, 10%, 1);
+    --dark--text:        #ffffff;
+
+    --bg:         light-dark(var(--light--background), var(--dark--background));
+    --bg-2:       light-dark(#f2f2f2, hsla(0, 0%, 13%, 1));
+    --bg-3:       light-dark(#e6e6e6, hsla(0, 0%, 16%, 1));
+    --line:       light-dark(hsl(0, 0%, 78%), hsl(0, 0%, 20%));
+    --line-strong:light-dark(hsl(0, 0%, 58%), hsl(0, 0%, 30%));
+    --fg:         light-dark(var(--light--text), var(--dark--text));
+    --fg-dim:     light-dark(hsl(0, 0%, 38%), hsl(0, 0%, 66%));
+    --fg-dimmer:  light-dark(hsl(0, 0%, 55%), hsl(0, 0%, 44%));
     --btc: #f7931a;
     /* categories */
     --cat-channel:   oklch(0.74 0.13 230);   /* state channel — cool blue */
@@ -101,7 +109,7 @@
     grid-area: stage;
     position: relative;
     overflow: hidden;
-    background: radial-gradient(circle at center, hsl(0,0%,11%) 0%, var(--bg) 60%);
+    background: radial-gradient(circle at center, light-dark(hsl(0,0%,89%), hsl(0,0%,13%)) 0%, var(--bg) 60%);
   }
   .stage svg.edges {
     position: absolute;
@@ -120,7 +128,7 @@
     position: absolute;
     font-family: 'Oswald', sans-serif;
     font-weight: 700;
-    color: hsl(0, 0%, 12%);
+    color: light-dark(hsl(0, 0%, 88%), hsl(0, 0%, 15%));
     pointer-events: none;
     user-select: none;
     letter-spacing: -0.02em;

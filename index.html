@@ -772,9 +772,8 @@
     body {
       height: auto;
       min-height: 100%;
-      overflow: hidden;
+      overflow: auto;
       overflow-x: hidden;
-      overscroll-behavior: none;
     }
 
     .app {
@@ -782,11 +781,10 @@
       inset: auto;
       min-height: 0;
       grid-template-columns: 1fr;
-      grid-template-rows: auto minmax(500px, 62svh) auto;
+      grid-template-rows: auto minmax(660px, 78svh);
       grid-template-areas:
         "header"
-        "stage"
-        "info-bar";
+        "stage";
     }
 
     .panel {
@@ -801,8 +799,6 @@
       border-top: none;
       display: flex;
       overflow-y: auto;
-      overscroll-behavior: contain;
-      -webkit-overflow-scrolling: touch;
     }
 
     .panel.panel-open {
@@ -903,11 +899,10 @@
 
     /* Mobile reading panel sits below the map in the normal page flow. */
     .app {
-      grid-template-rows: auto minmax(500px, 62svh) auto;
+      grid-template-rows: auto minmax(660px, 78svh);
       grid-template-areas:
         "header"
-        "stage"
-        "info-bar";
+        "stage";
     }
     .info-bar {
       display: flex !important;

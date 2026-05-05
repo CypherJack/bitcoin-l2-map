@@ -774,6 +774,7 @@
       min-height: 100%;
       overflow: hidden;
       overflow-x: hidden;
+      overscroll-behavior: none;
     }
 
     .app {
@@ -800,6 +801,8 @@
       border-top: none;
       display: flex;
       overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
     }
 
     .panel.panel-open {

@@ -2008,7 +2008,7 @@ function renderPanel(id) {
       ${LOGOS[n.id] ? LOGOS[n.id].detail(80, 80) : `[ ${n.name} ]`}
     </div>
     ${n.body.split('\n\n').map((p, i) => `<p class="body${i > 0 ? ' body-cont' : ''}">${p}</p>`).join('')}
-    <a class="read-more" href="${n.learnMore || '#'}">${S.readMore} ${n.name} →</a>
+    <a class="read-more" href="${n.learnMore || '#'}" target="_blank" rel="noopener">${S.readMore} ${n.name} →</a>
     <dl class="specs">
       <dt>${S.roleLabel}</dt><dd>${n.short}</dd>
       <dt>Consensus</dt><dd class="mono">${n.consensus}</dd>

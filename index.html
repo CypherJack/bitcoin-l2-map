@@ -1840,7 +1840,7 @@ function drawEdges() {
     bg.setAttribute('y', bbox.y - padY);
     bg.setAttribute('width',  bbox.width  + padX * 2);
     bg.setAttribute('height', bbox.height + padY * 2);
-    bg.setAttribute('fill', window.matchMedia('(prefers-color-scheme: dark)').matches ? 'hsl(0,0%,9%)' : 'hsl(0,0%,94%)');
+    bg.setAttribute('fill', 'var(--bg)');
     bg.style.stroke = edgeColor;
     bg.setAttribute('stroke-width', '1');
     tg.insertBefore(bg, txt);

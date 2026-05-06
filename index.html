@@ -1590,30 +1590,55 @@ function updateWideSlabs(stageWidth) {
 }
 
 // ── Layout positions ─────────────────────────────────────────────
-function stackPositions(stageWidth) {
+function stackPositions(stageWidth, stageHeight) {
   const pos = {};
   const isMobile = stageWidth && stageWidth < 769;
-  const ty = isMobile ? TIER_Y.mobile : TIER_Y.desktop;
 
-  // BTC and LN are single nodes on their tier
-  pos.btc = { x: 0.50, y: ty.node[3] };
-  pos.ln  = { x: 0.50, y: ty.node[2] };
-
-  // Distribute nodes across each tier
+  // X distribution (unchanged)
   const minXNorm = isMobile ? 0.15 : (stageWidth ? (16 + 200 + 28 + 12) / stageWidth : 0.28);
   const maxXNorm = isMobile ? 0.85 : 0.84;
   const colX = (i, n) => minXNorm + (i / (n - 1)) * (maxXNorm - minXNorm);
 
-  const tier15Order = ['ark', 'spark', 'rgb', 'bitvm', 'ordinals'];
-  const tier15 = tier15Order.filter(id => NODES.find(n => n.id === id));
-  tier15.forEach((id, i) => {
-    pos[id] = { x: colX(i, tier15.length), y: ty.node[1] };
-  });
+  // Y positions
+  if (isMobile && stageHeight) {
+    // Mobile: nodes hug their tier label with a fixed pixel gap.
+    // Label bottom ≈ 18px below label top. Gap ≈ 12px. Node half-height ≈ 22px.
+    // So node center = labelTop + 50px (fixed, doesn't scale with stage).
+    // BTC exception: connections arrive from above, keep spacious.
+    const LABEL_TO_NODE = 50;
+    const labelTopPx = r => (r * 0.25 + 0.02) * stageHeight;
+    const nodeY = r => (labelTopPx(r) + LABEL_TO_NODE) / stageHeight;
 
-  const tier2 = NODES.filter(n => n.tier === 2).map(n => n.id);
-  tier2.forEach((id, i) => {
-    pos[id] = { x: colX(i, tier2.length), y: ty.node[0] };
-  });
+    pos.btc = { x: 0.50, y: 0.90 };
+    pos.ln  = { x: 0.50, y: nodeY(2) };
+
+    const tier15Order = ['ark', 'spark', 'rgb', 'bitvm', 'ordinals'];
+    const tier15 = tier15Order.filter(id => NODES.find(n => n.id === id));
+    tier15.forEach((id, i) => {
+      pos[id] = { x: colX(i, tier15.length), y: nodeY(1) };
+    });
+
+    const tier2 = NODES.filter(n => n.tier === 2).map(n => n.id);
+    tier2.forEach((id, i) => {
+      pos[id] = { x: colX(i, tier2.length), y: nodeY(0) };
+    });
+  } else {
+    // Desktop: percentage-based (unchanged)
+    const ty = TIER_Y.desktop;
+    pos.btc = { x: 0.50, y: ty.node[3] };
+    pos.ln  = { x: 0.50, y: ty.node[2] };
+
+    const tier15Order = ['ark', 'spark', 'rgb', 'bitvm', 'ordinals'];
+    const tier15 = tier15Order.filter(id => NODES.find(n => n.id === id));
+    tier15.forEach((id, i) => {
+      pos[id] = { x: colX(i, tier15.length), y: ty.node[1] };
+    });
+
+    const tier2 = NODES.filter(n => n.tier === 2).map(n => n.id);
+    tier2.forEach((id, i) => {
+      pos[id] = { x: colX(i, tier2.length), y: ty.node[0] };
+    });
+  }
 
   return pos;
 }
@@ -1667,7 +1692,7 @@ function layoutAll() {
     if (el) el.style.setProperty('--t', TIER_Y[isMobile ? 'mobile' : 'desktop'].label(t.row));
   });
 
-  const norm = stackPositions(width);
+  const norm = stackPositions(width, height);
   NODES.forEach(n => {
     const p = norm[n.id];
     state.px[n.id] = { x: p.x * width, y: p.y * height };

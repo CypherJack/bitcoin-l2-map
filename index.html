@@ -1198,22 +1198,22 @@ function bitvmLogoSVG(w, h) {
 // ───────────────────────────────────────────────────────────────
 
 
-function detailLogoImg(file, alt) {
-  return `<img class="detail-logo" src="logos-map-l2/${file}" alt="${alt} logo">`;
+function detailLogoImg(src, alt) {
+  return `<img class="detail-logo" src="${src}" alt="${alt} logo">`;
 }
 
 const LOGOS = {
-  btc:      { icon: (w,h) => btcLogoSVG(w,h),           detail: () => detailLogoImg('bitcoin.svg', 'Bitcoin') },
+  btc:      { icon: (w,h) => btcLogoSVG(w,h),           detail: () => detailLogoImg('https://cdn.prod.website-files.com/688e6d7092aabedfae99d3ff/69fb5f72c047082a2a7c89d4_bitcoin.svg', 'Bitcoin') },
   ln:       { icon: (w,h) => `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`,
-               detail: () => detailLogoImg('lightning-netwok.svg', 'Lightning') },
+               detail: () => detailLogoImg('https://cdn.prod.website-files.com/688e6d7092aabedfae99d3ff/69fb5f73285a130fed6d5ca9_lightning-netwok.svg', 'Lightning') },
   spark:    { icon: () => `<svg xmlns="http://www.w3.org/2000/svg" width="26" height="24" viewBox="0 0 68 64" fill="none">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M39.7159 24.6777L40.8727 0H26.4219L27.5787 24.678L4.46555 15.9518L0 29.6953L23.8282 36.2212L8.38717 55.506L20.0781 64L33.6483 43.3542L47.2179 63.9992L58.9089 55.5052L43.4679 36.2206L67.2937 29.6954L62.8281 15.9518L39.7159 24.6777Z" fill="currentColor"/>
       </svg>`,
-               detail: () => detailLogoImg('spark.svg', 'Spark') },
-  rgb:      { icon: (w,h) => rgbLogoSVG(w,h),            detail: () => detailLogoImg('rgb.svg', 'RGB') },
-  bitvm:    { icon: (w,h) => bitvmLogoSVG(w,h),          detail: () => detailLogoImg('bitvm.svg', 'BitVM') },
-  liquid:   { icon: (w,h) => liquidIconSVG(w,h),          detail: () => detailLogoImg('liquid.svg', 'Liquid') },
-  rsk:      { icon: (w,h) => rskIconSVG(w,h),             detail: () => detailLogoImg('rootstock.svg', 'Rootstock') },
+               detail: () => detailLogoImg('https://cdn.prod.website-files.com/688e6d7092aabedfae99d3ff/69fb5f72656ce076ab5f0c9b_spark.svg', 'Spark') },
+  rgb:      { icon: (w,h) => rgbLogoSVG(w,h),            detail: () => detailLogoImg('https://cdn.prod.website-files.com/688e6d7092aabedfae99d3ff/69fb5f7281358dbb86c60bde_rgb.svg', 'RGB') },
+  bitvm:    { icon: (w,h) => bitvmLogoSVG(w,h),          detail: () => detailLogoImg('https://cdn.prod.website-files.com/688e6d7092aabedfae99d3ff/69fb5f72a5892c5bb372f690_bitvm.svg', 'BitVM') },
+  liquid:   { icon: (w,h) => liquidIconSVG(w,h),          detail: () => detailLogoImg('https://cdn.prod.website-files.com/688e6d7092aabedfae99d3ff/69fb5f726b3e88ab0d5cc5d0_liquid.svg', 'Liquid') },
+  rsk:      { icon: (w,h) => rskIconSVG(w,h),             detail: () => detailLogoImg('https://cdn.prod.website-files.com/688e6d7092aabedfae99d3ff/69fb5f720f1b0b43b0e2c43a_rootstock.svg', 'Rootstock') },
   citrea:   { icon: () => `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 33 28" fill="none">
         <path fill="currentColor" d="M20.793 3.587 17.538 9.2c-.925 1.594-3.237 1.594-4.162 0l-3.255-5.612L8.118 0h14.708z"/>
         <path fill="currentColor" d="M9.435 3.934l3.244 5.619c.918 1.598-.235 3.582-2.078 3.586H.005L7.374.364z"/>
@@ -1222,12 +1222,12 @@ const LOGOS = {
         <path fill="currentColor" d="M21.458 23.14l-3.244-5.62c-.919-1.597.235-3.582 2.078-3.585h10.595L23.52 26.71z"/>
         <path fill="currentColor" d="M9.435 23.14l3.244-5.62c.918-1.597-.235-3.582-2.078-3.585H.005L7.374 26.71z"/>
       </svg>`,
-               detail: () => detailLogoImg('citrea.svg', 'Citrea') },
+               detail: () => detailLogoImg('https://cdn.prod.website-files.com/688e6d7092aabedfae99d3ff/69fb5f72def586cce58f0981_citrea.svg', 'Citrea') },
   ark:      { icon: (w,h) => `<span style="font-size:${w}px;font-family:Oswald,sans-serif;font-weight:600">A</span>`,
-               detail: () => detailLogoImg('arkade.svg', 'Ark') },
+               detail: () => detailLogoImg('https://cdn.prod.website-files.com/688e6d7092aabedfae99d3ff/69fb5f724deab7a55d683d82_arkade.svg', 'Ark') },
   fedi:     { icon: (w,h) => `<span style="font-size:${w}px;font-family:Oswald,sans-serif;font-weight:600">E</span>`,
-               detail: () => detailLogoImg('ecash.svg', 'e-cash') },
-  ordinals: { icon: (w,h) => ordinalsLogoSVG(w,h),        detail: () => detailLogoImg('inscription.svg', 'Inscriptions') }
+               detail: () => detailLogoImg('https://cdn.prod.website-files.com/688e6d7092aabedfae99d3ff/69fb5f720bff70462a99e9ee_ecash.svg', 'e-cash') },
+  ordinals: { icon: (w,h) => ordinalsLogoSVG(w,h),        detail: () => detailLogoImg('https://cdn.prod.website-files.com/688e6d7092aabedfae99d3ff/69fb5f7235b04269e66740f0_inscription.svg', 'Inscriptions') }
 };
 
 // ── Data ──────────────────────────────────────────────────────────

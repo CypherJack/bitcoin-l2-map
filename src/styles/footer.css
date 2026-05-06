@@ -1,0 +1,30 @@
+/* Footer */
+footer {
+  grid-area: footer;
+  padding: 12px 28px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  color: var(--fg-dimmer);
+  text-transform: uppercase;
+  background: var(--bg);
+}
+footer .nav { display: flex; gap: 22px; align-items: center; }
+footer .nav button {
+  background: transparent;
+  border: none;
+  color: var(--fg-dim);
+  font-family: inherit;
+  font-size: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+}
+footer .nav button.active { color: var(--fg); border-bottom-color: var(--fg); }
+footer .nav button:hover { color: var(--fg); }

@@ -1,0 +1,176 @@
+/* Mobile-only overrides (max-width: 768px) */
+/* Scrollbar */
+.panel::-webkit-scrollbar { width: 8px; }
+.panel::-webkit-scrollbar-track { background: var(--bg); }
+.panel::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 4px; }
+
+/* ---- PANEL CLOSE BUTTON (hidden on desktop) ---- */
+.panel-close {
+  display: none;
+}
+
+/* ---- MOBILE ---- */
+@media (max-width: 768px) {
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .app {
+    position: relative;
+    inset: auto;
+    height: 100%;
+    min-height: 0;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "header"
+      "stage"
+      "info-bar";
+  }
+
+  .panel {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 200;
+    transform: translateX(100%);
+    transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    border-left: none;
+    border-top: none;
+    display: flex;
+    overflow-y: auto;
+  }
+
+  .panel.panel-open {
+    transform: translateX(0);
+  }
+
+  .panel .tagline {
+    font-size: 17px;
+  }
+
+  .panel p.body,
+  .empty p {
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  .panel p.body::first-letter {
+    float: none;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    margin: 0;
+    color: inherit;
+  }
+
+  .specs dd {
+    font-size: 16px;
+  }
+
+  .specs dd.mono {
+    font-size: 14px;
+  }
+
+  .panel-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 44px;
+    height: 44px;
+    margin: 12px 0 0 12px;
+    background: var(--bg);
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    color: var(--fg);
+    font-size: 18px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .panel-close:hover {
+    background: var(--line-strong);
+  }
+
+  /* Stratum labels → top-left of each section on mobile */
+  .stratum::before {
+    left: 0;
+    right: 0;
+  }
+
+  .stratum-rail {
+    top: 0;
+    left: 12px;
+    right: auto;
+    width: auto;
+    bottom: auto;
+    justify-content: flex-start;
+  }
+
+  .stratum-rail .tier-name {
+    white-space: nowrap !important;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    padding: 3px 8px;
+  }
+
+  .stratum-rail br {
+    display: none;
+  }
+
+  /* Smaller nodes on mobile */
+  .node-core {
+    width: 52px;
+    height: 52px;
+    font-size: 18px;
+  }
+
+  .app.mode-stack .node:not(.btc):not(.ln) .node-core {
+    width: 44px;
+    height: 44px;
+  }
+
+  .node-label {
+    font-size: 10px;
+    top: calc(100% + 8px);
+  }
+
+  /* info-bar: compact row, no scroll */
+  .info-bar {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow: hidden;
+    max-height: none;
+    border-top: 1px solid var(--line);
+    gap: 0;
+  }
+  .info-bar-col {
+    border-right: 1px solid var(--line);
+    border-bottom: none;
+    padding: 8px 10px;
+  }
+  .info-bar-col:last-child { border-right: none; }
+  .info-bar-col h3 {
+    font-size: 9px;
+    margin: 0 0 4px;
+  }
+  .info-bar-col p {
+    font-size: 11px;
+    line-height: 1.35;
+  }
+  .info-bar-col .legend-row {
+    font-size: 10px;
+    margin-bottom: 2px;
+    gap: 5px;
+  }
+
+  /* Strata mobile positions are set by JS (see TIERS + layoutAll) */
+}

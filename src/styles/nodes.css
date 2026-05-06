@@ -1,0 +1,94 @@
+/* Map nodes */
+.node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 200ms ease;
+  z-index: 4;
+}
+.node-core {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--bg-2);
+  border: 1px solid var(--line-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg);
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: 0.02em;
+  position: relative;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+.node-core::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1px solid var(--cat, var(--line));
+  opacity: 0.55;
+  transition: opacity 160ms ease, inset 160ms ease;
+}
+.node:hover .node-core { background: var(--bg-3); border-color: var(--cat, var(--fg-dim)); }
+.node:hover .node-core::after { opacity: 1; inset: -8px; }
+.node.active .node-core { background: var(--bg-3); border-color: var(--cat, var(--fg)); }
+.node.active .node-core::after { opacity: 1; inset: -9px; border-width: 1.5px; }
+
+.node-label {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 14px);
+  transform: translateX(-50%);
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+  color: var(--fg);
+  white-space: nowrap;
+  text-align: center;
+}
+.node-label .sub {
+  display: block;
+  margin-top: 3px;
+  font-family: 'Spectral', serif;
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 11px;
+  color: var(--fg-dimmer);
+}
+
+/* Bitcoin center node */
+.node.btc .node-core {
+  width: 124px; height: 124px;
+  background: var(--bg-3);
+  border-color: var(--btc);
+  color: var(--btc);
+  font-size: 48px;
+}
+.node.btc .node-core::after {
+  inset: -10px;
+  border: 1px solid hsla(33, 92%, 54%, 0.35);
+}
+.node.btc .node-core::before {
+  content: '';
+  position: absolute;
+  inset: -22px;
+  border-radius: 50%;
+  border: 1px dashed hsla(33, 92%, 54%, 0.18);
+}
+.node.btc .node-label {
+  top: calc(100% + 18px);
+  font-size: 14px;
+  letter-spacing: 0.18em;
+}
+.node.btc:hover .node-core { transform: none; }
+
+/* Dim inactive nodes when one is selected */
+.app.has-active .node:not(.active):not(.related) { opacity: 0.22; }
+.app.has-active .node.related .node-core { border-color: var(--cat, var(--line-strong)); }

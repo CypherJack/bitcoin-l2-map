@@ -1,0 +1,176 @@
+[
+  {
+    "id": "btc",
+    "name": "Bitcoin",
+    "learnMore": "https://offchain.media/article/what-bitcoin-digital-currency-competing-central-banks",
+    "short": "Base layer. Proof-of-work. Final settlement.",
+    "tagline": "The ledger everything else anchors to.",
+    "consensus": "Nakamoto · Proof-of-Work (SHA-256)",
+    "bridge": null,
+    "body": "All layers above inherit (somehow) their security from the way they interact with the Bitcoin blockchain. Every L2 is a bet on how to scale, privatize, or program around Bitcoin's deliberately conservative base layer without compromising the settlement guarantee beneath them.",
+    "bridgePath": null
+  },
+  {
+    "id": "ln",
+    "name": "Lightning",
+    "learnMore": "https://offchain.media/article/what-is-lightning-network-bitcoin",
+    "short": "Payment channels for instant, low-fee BTC.",
+    "tagline": "Off-chain payments, on-chain settlement.",
+    "consensus": "Bilateral payment channels · HTLCs · onion routing",
+    "bridge": "Native - funded by on-chain multisig UTXO",
+    "body": "Lightning moves value between parties without broadcasting each payment, settling only the net result back to Bitcoin. Trust is minimized: either counterparty can unilaterally close a channel and reclaim funds on L1 without permission.",
+    "bridgePath": [
+      "BTC UTXO",
+      "2-of-2 Funding Tx",
+      "Channel",
+      "Lightning Payment"
+    ]
+  },
+  {
+    "id": "liquid",
+    "name": "Liquid",
+    "learnMore": "https://offchain.media/article/liquid-network-bitcoins-private-scalable-sidechain",
+    "short": "Federated sidechain.",
+    "tagline": "Confidential transactions, 2 minutes block time.",
+    "consensus": "Strong Federation · 15 functionaries · 1-min blocks",
+    "bridge": "Federated peg - 11-of-15 signers custody",
+    "body": "Liquid is a production federated sidechain optimized for token issuers. It trades Bitcoin's decentralisation for throughput and confidentiality: the functionary federation holds pegged BTC and signs off on block production.",
+    "bridgePath": [
+      "BTC",
+      "Federation Peg-in",
+      "L-BTC",
+      "Liquid Network"
+    ]
+  },
+  {
+    "id": "rsk",
+    "name": "Rootstock",
+    "learnMore": "https://offchain.media/article/what-rootstock-bitcoin-sidechain-smart-contracts",
+    "short": "EVM-compatible merge-mined sidechain.",
+    "tagline": "Smart contracts, secured by Bitcoin hashrate.",
+    "consensus": "Merge-mined PoW + PowPeg federation",
+    "bridge": "PowPeg - hybrid federation + miner-gated",
+    "body": "Rootstock (RSK) runs a Solidity-compatible EVM as a sidechain, merge-mined by a majority of Bitcoin hashrate. The PowPeg bridges BTC to RBTC using a hybrid federation whose HSMs release funds only on proof of sufficient cumulative work.",
+    "bridgePath": [
+      "BTC",
+      "PowPeg (HSM + Miners)",
+      "RBTC",
+      "RSK EVM"
+    ]
+  },
+  {
+    "id": "ark",
+    "name": "Ark",
+    "learnMore": "https://offchain.media/article/what-ark-protocol-missing-piece-make-bitcoin-scalable-everyday-currency",
+    "short": "Shared UTXO protocol for instant BTC.",
+    "tagline": "A virtual UTXO inside a communal round.",
+    "consensus": "ASP-coordinated rounds · shared output tree",
+    "bridge": "Native - unilateral exit to L1 after timeout",
+    "body": "Ark batches many users into shared on-chain outputs coordinated by an Ark Service Provider. Users hold \"virtual\" UTXOs they can spend instantly off-chain and unilaterally redeem on Bitcoin if the ASP misbehaves. No channel liquidity to manage.",
+    "bridgePath": [
+      "BTC",
+      "ASP Round Tx",
+      "vUTXO",
+      "Ark Payment"
+    ]
+  },
+  {
+    "id": "citrea",
+    "name": "Citrea",
+    "learnMore": "https://offchain.media/article/what-citrea-bitcoin-rollup-powered-bitvm",
+    "short": "Zero-knowledge rollup on Bitcoin.",
+    "tagline": "EVM execution, verified by BitVM.",
+    "consensus": "ZK rollup · zkEVM · data posted as inscriptions",
+    "bridge": "BitVM-based optimistic bridge",
+    "body": "Citrea is a zk-rollup that publishes state roots and data availability back to Bitcoin. It leverages BitVM-style verification to allow Bitcoin to reject invalid rollup state without consensus changes. Arbitrary computation, Bitcoin settlement.",
+    "bridgePath": [
+      "BTC",
+      "BitVM Bridge",
+      "zkProof",
+      "Citrea Rollup"
+    ]
+  },
+  {
+    "id": "bitvm",
+    "name": "BitVM",
+    "learnMore": "https://offchain.media/article/bitvm-protocol-enables-layer-2-rollups-on-bitcoin",
+    "short": "Optimistic computation on Bitcoin.",
+    "tagline": "Any program, verified by challenge.",
+    "consensus": "Optimistic fraud proofs · two-party covenants",
+    "bridge": "It's a mechanism, not a chain - enables trust-minimized pegs",
+    "body": "BitVM is not a chain, it is a research primitive that lets Bitcoin verify arbitrary programs via fraud proofs between a prover and a verifier. It powers the next generation of trust-minimized bridges used by rollups like Citrea.",
+    "bridgePath": [
+      "Prover",
+      "Taproot Script",
+      "Challenge",
+      "Verifier"
+    ]
+  },
+  {
+    "id": "spark",
+    "name": "Spark",
+    "learnMore": "https://offchain.media/article/spark-protocol-bitcoin-layer2-simplifies-btc-ownership-significant-trade-offs",
+    "short": "Abstracted Lightning balance for instant BTC payments.",
+    "tagline": "A managed Lightning balance inside a shared liquidity pool.",
+    "consensus": "Service-provider coordinated liquidity · Lightning routing",
+    "bridge": "Native - Lightning settlement with on-chain withdrawal",
+    "body": "Spark enables users to hold balances backed by Lightning liquidity without managing channels. Payments are automated, and funds remain withdrawable on-chain at any time. The model relies on shared key custody between the user and provider, limiting unilateral control while simplifying the user experience.",
+    "bridgePath": [
+      "BTC",
+      "Funding Tx",
+      "Lightning Liquidity Pool",
+      "Spark Balance",
+      "Lightning Payment"
+    ]
+  },
+  {
+    "id": "rgb",
+    "name": "RGB",
+    "learnMore": "https://offchain.media/article/rgb-ultra-scalable-highly-confidential-bitcoin-layer-2",
+    "short": "Client-side assets on Bitcoin & Lightning.",
+    "tagline": "Smart contracts that live off-chain.",
+    "consensus": "Client-side validation · cryptographic single-use seals (UTXOs)",
+    "bridge": "Anchored in Bitcoin UTXOs; data kept by users",
+    "body": "RGB flips the model: contract state lives with its owners, not on-chain. Bitcoin UTXOs act as single-use seals that commit to off-chain state transitions. Scales without bloating the chain, at the cost of peer-to-peer data exchange.",
+    "bridgePath": [
+      "BTC UTXO (seal)",
+      "Commitment",
+      "Client State",
+      "RGB transaction"
+    ]
+  },
+  {
+    "id": "fedi",
+    "name": "e-cash",
+    "learnMore": "https://offchain.media/article/what-ecash-david-chaums-confidential-transaction-protocol-bitcoin",
+    "short": "Private bearer BTC for instant payments.",
+    "tagline": "Private digital bearer cash issued by a mint backed by BTC.",
+    "consensus": "Mint-issued tokens · Chaumian signatures",
+    "bridge": "Redeemable for BTC via mint (often Lightning)",
+    "body": "e-cash systems use Chaumian blind signatures to allow users to hold and transfer Bitcoin-backed tokens privately and instantly. Transactions occur off-chain, with no public trace on Bitcoin or Lightning. Users can redeem tokens for BTC via the issuing mint. Cashu implements a single-operator mint, optimizing simplicity and fast deployment. Fedimint distributes custody across a federation of guardians, reducing single-point trust at the cost of greater coordination complexity.",
+    "bridgePath": [
+      "BTC",
+      "BTC deposit to mint",
+      "Ecash Token",
+      "Instant private payment"
+    ],
+    "subtitle": "Cashu · Fedimint"
+  },
+  {
+    "id": "ordinals",
+    "name": "Inscriptions",
+    "learnMore": "https://offchain.media/article/what-ordinals-runes-other-inscriptions-on-bitcoin",
+    "short": "On-chain data and token protocols secured by BTC.",
+    "tagline": "Arbitrary data embedded directly inside Bitcoin transactions.",
+    "consensus": "Bitcoin L1 validation · indexed metadata interpretation",
+    "bridge": "Native - directly embedded in Bitcoin transactions",
+    "body": "Bitcoin inscriptions store data on-chain using witness space, enabling assets and metadata to be permanently recorded on Bitcoin.\n\nOrdinals attach data (images, text, JSON) to individual satoshis, enabling NFTs and digital artifacts.\n\nRunes define fungible tokens using a UTXO-based model designed to minimize on-chain footprint and reduce indexer complexity.",
+    "bridgePath": [
+      "BTC",
+      "BTC transaction",
+      "Inscription",
+      "Transfer transaction"
+    ],
+    "subtitle": "Ordinals · Runes"
+  }
+]

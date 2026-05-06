@@ -1,0 +1,7 @@
+---
+const { t } = Astro.props;
+---
+<aside class="panel" id="panel">
+  <button class="panel-close" id="panel-close" aria-label={t.closeLabel}>✕</button>
+  <div class="panel-inner" id="panel-inner"></div>
+</aside>

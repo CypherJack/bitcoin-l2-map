@@ -1,0 +1,42 @@
+/* Info bar (desktop hidden, mobile flex row) */
+/* Info bar — desktop: masqué */
+.info-bar {
+  display: none;
+  grid-area: info-bar;
+  flex-direction: row;
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+  overflow: visible;
+  max-height: none;
+}
+.info-bar-col {
+  flex: 1;
+  padding: 16px 14px;
+  border-right: 1px solid var(--line);
+}
+.info-bar-col:last-child { border-right: none; }
+.info-bar-col h3 {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  margin: 0 0 10px;
+}
+.info-bar-col p {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--fg);
+  margin: 0;
+}
+.info-bar-col p em { font-style: italic; color: var(--fg-dim); }
+.info-bar-col .legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--fg);
+}

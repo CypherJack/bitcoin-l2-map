@@ -1,0 +1,43 @@
+{
+  "lang": "fr",
+  "title": "Une carte de Bitcoin",
+  "titleEm": "et ses surcouches",
+  "pageTitle": "Une carte de Bitcoin — Off-Chain Media",
+  "closeLabel": "Fermer",
+  "settingsBtn": "Paramètres ◹",
+  "settingsTitle": "Paramètres",
+  "edgeStyleLabel": "Style des liens",
+  "edgeStraight": "Droit",
+  "edgeCurved": "Courbé",
+  "showLabels": "Afficher les labels",
+  "categoryRings": "Anneaux de catégories",
+  "bgTypo": "Typographie de fond",
+  "readMap": "Lire la carte",
+  "readMapBody": "Bitcoin à la base, tout ce qui se construit au-dessus est un compromis sur un axe : ",
+  "readMapEm": "le niveau de confiance accordé à autre chose que Bitcoin lui-même",
+  "legendTitle": "Légende des connexions",
+  "legendNative": "Natif / trust-minimisé",
+  "legendFederated": "Fédéré / peg multi-sig",
+  "legendLN": "Connexion Lightning",
+  "legendCrypto": "Peg cryptographique",
+  "readMore": "Lire plus sur",
+  "pegMechanism": "Mécanisme de peg",
+  "roleLabel": "Rôle",
+  "consensusLabel": "Consensus",
+  "bridgeLabel": "Bridge",
+  "l1Tag": "Layer 1 · Settlement",
+  "tierLabels": {
+    "2": "Sidechains,<br> Rollups &amp; Mints",
+    "15": "Primitives Native",
+    "ln": "Lightning Network",
+    "1": "Bitcoin"
+  },
+  "categories": {
+    "channel":     "Chaîne d'état",
+    "sidechain":   "Sidechain fédérée",
+    "rollup":      "Rollup",
+    "client":      "Validation côté client",
+    "ecash":       "Mint de Chaum / E-Cash",
+    "inscription": "Inscription on-chain"
+  }
+}

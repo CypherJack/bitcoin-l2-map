@@ -1,0 +1,43 @@
+{
+  "lang": "en",
+  "title": "A Map of Bitcoin",
+  "titleEm": "and its scaling layers",
+  "pageTitle": "A Map of Bitcoin — Off-Chain Media",
+  "closeLabel": "Close",
+  "settingsBtn": "Tweaks ◹",
+  "settingsTitle": "Tweaks",
+  "edgeStyleLabel": "Edge style",
+  "edgeStraight": "Straight",
+  "edgeCurved": "Curved",
+  "showLabels": "Show labels",
+  "categoryRings": "Category rings",
+  "bgTypo": "Background typography",
+  "readMap": "Reading the map",
+  "readMapBody": "Bitcoin sits at the base, everything above it is a compromise on a single axis: ",
+  "readMapEm": "how much you trust something other than Bitcoin itself",
+  "legendTitle": "Edge legend",
+  "legendNative": "Native / trust-minimized",
+  "legendFederated": "Federated / multi-sig peg",
+  "legendLN": "Lightning connection",
+  "legendCrypto": "Cryptographic peg",
+  "readMore": "Read more about",
+  "pegMechanism": "Peg mechanism",
+  "roleLabel": "Role",
+  "consensusLabel": "Consensus",
+  "bridgeLabel": "Bridge",
+  "l1Tag": "Layer 1 · Settlement",
+  "tierLabels": {
+    "2": "Sidechains,<br> Rollups &amp; Mints",
+    "15": "Native Primitives",
+    "ln": "Lightning Network",
+    "1": "Bitcoin"
+  },
+  "categories": {
+    "channel":     "State Channel",
+    "sidechain":   "Federated Sidechain",
+    "rollup":      "Rollup",
+    "client":      "Client-side Validation",
+    "ecash":       "Chaumian Mint / E-Cash",
+    "inscription": "On-chain Inscription"
+  }
+}

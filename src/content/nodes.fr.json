@@ -1,0 +1,176 @@
+[
+  {
+    "id": "btc",
+    "name": "Bitcoin",
+    "learnMore": "https://offchain.media/fr/article/quest-ce-que-bitcoin-monnaie-numerique-concurrence-banques-centrales",
+    "short": "Couche de base. Preuve de Travail. Règlement définitif.",
+    "tagline": "Le registre sur lequel tout repose.",
+    "consensus": "Nakamoto · Preuve de travail (SHA-256)",
+    "bridge": null,
+    "body": "Toutes les couches supérieures héritent (d'une manière ou d'une autre) de leur sécurité de la façon dont elles interagissent avec la blockchain Bitcoin. Chaque solution de couche 2 est un pari sur la manière de faire évoluer l'échelle, d'améliorer la confidentialité ou de programmer autour de la couche de base volontairement conservatrice de Bitcoin, sans compromettre la garantie de règlement sous-jacente.",
+    "bridgePath": null
+  },
+  {
+    "id": "ln",
+    "name": "Lightning",
+    "learnMore": "https://offchain.media/fr/article/what-is-lightning-network-bitcoin",
+    "short": "Canaux de paiement pour des transactions BTC instantanées et peu coûteuses.",
+    "tagline": "Paiements off-chain, règlement on-chain.",
+    "consensus": "Canaux bilatéraux · HTLCs · routage en oignon",
+    "bridge": "Natif - financé par un UTXO multisig on-chain",
+    "body": "Lightning permet d'échanger de la valeur sans diffuser chaque paiement, en ne réglant que le résultat net de la balance de ses canaux sur Bitcoin. La confiance est minimisée : chaque partie peut fermer un canal unilatéralement et récupérer ses fonds sur la couche 1 sans permission.",
+    "bridgePath": [
+      "BTC UTXO",
+      "transaction de financement 2-sur-2",
+      "canal",
+      "paiement Lightning"
+    ]
+  },
+  {
+    "id": "liquid",
+    "name": "Liquid",
+    "learnMore": "https://offchain.media/fr/article/liquid-network-sidechain-bitcoin-privee-scalable",
+    "short": "Sidechain fédérée.",
+    "tagline": "Transactions confidentielles, 2 minutes de temps de bloc.",
+    "consensus": "Fédération forte · 15 validateurs",
+    "bridge": "Peg fédéré - garde assurée par 11-sur-15 signataires",
+    "body": "Liquid est une sidechain fédérée, optimisée pour les émetteurs d'actifs tokenisés. Elle échange la décentralisation de Bitcoin contre du débit et de la confidentialité : la fédération détient les BTC verrouillés et valide la production des blocs.",
+    "bridgePath": [
+      "BTC",
+      "peg-in vers la fédération",
+      "L-BTC",
+      "réseau Liquid"
+    ]
+  },
+  {
+    "id": "rsk",
+    "name": "Rootstock",
+    "learnMore": "https://offchain.media/fr/article/rootstock-sidechain-bitcoin-smart-contracts",
+    "short": "Sidechain compatible EVM merge-minée.",
+    "tagline": "Smart contracts sécurisés par le hashrate de Bitcoin.",
+    "consensus": "Preuve de travail merge-minée + PowPeg",
+    "bridge": "PowPeg - hybride fédération + validation par des mineurs",
+    "body": "Rootstock (RSK) exécute une EVM compatible Solidity, merge-minée par une majorité du hashrate Bitcoin. Le PowPeg transfère les BTC vers RBTC via une fédération hybride dont les HSM libèrent les fonds uniquement si suffisamment de travail cumulatif est prouvé.",
+    "bridgePath": [
+      "BTC",
+      "PowPeg (HSM + mineurs)",
+      "RBTC",
+      "EVM RSK"
+    ]
+  },
+  {
+    "id": "ark",
+    "name": "Ark",
+    "learnMore": "https://offchain.media/fr/article/protocole-ark-piece-manquante-bitcoin-monnaie-quotidien-grande-echelle",
+    "short": "Protocole de UTXO partagés pour des paiements instantanés.",
+    "tagline": "Un UTXO virtuel dans une transaction collective.",
+    "consensus": "Rounds coordonnés par ASP · arbre d'outputs partagés",
+    "bridge": "Natif - sortie unilatérale vers L1 après délai",
+    "body": "Ark regroupe plusieurs utilisateurs dans des sorties de transactions on-chain partagées via un fournisseur ASP. Les utilisateurs détiennent des UTXO dit « virtuels » dépensables instantanément off-chain et récupérables sur Bitcoin si l'ASP se comporte mal.",
+    "bridgePath": [
+      "BTC",
+      "transaction de round ASP",
+      "vUTXO",
+      "paiement Ark"
+    ]
+  },
+  {
+    "id": "citrea",
+    "name": "Citrea",
+    "learnMore": "https://offchain.media/fr/article/citrea-bitcoin-rollup-fonctionnant-grace-bitvm",
+    "short": "Rollup zero-knowledge sur Bitcoin.",
+    "tagline": "Exécution EVM vérifiée par BitVM.",
+    "consensus": "Rollup ZK · zkEVM · données en inscriptions",
+    "bridge": "Bridge optimiste basé sur BitVM",
+    "body": "Citrea est un rollup ZK qui publie ses états sur Bitcoin. Il utilise un modèle de vérification type BitVM permettant de rejeter des états invalides sans modification du consensus Bitcoin.",
+    "bridgePath": [
+      "BTC",
+      "bridge BitVM",
+      "preuve ZK",
+      "rollup Citrea"
+    ]
+  },
+  {
+    "id": "bitvm",
+    "name": "BitVM",
+    "learnMore": "https://offchain.media/fr/article/bitvm-protocol-permet-layer-2-sur-bitcoin",
+    "short": "Calcul optimiste sur Bitcoin.",
+    "tagline": "Tout programme vérifié par challenge.",
+    "consensus": "Preuves de fraude optimistes · covenants à deux parties",
+    "bridge": "C'est un mécanisme, pas une chaîne - permet des bridges trust-minimisés",
+    "body": "BitVM n'est pas une blockchain, mais une primitive de recherche permettant de vérifier des programmes via preuves de fraude entre un prouveur et un vérificateur.",
+    "bridgePath": [
+      "Prouveur",
+      "script Taproot",
+      "challenge",
+      "vérificateur"
+    ]
+  },
+  {
+    "id": "spark",
+    "name": "Spark",
+    "learnMore": "https://offchain.media/fr/article/protocole-spark-layer-2-bitcoin-simplifie-detention-btc-compromis-importants",
+    "short": "Solde Lightning abstrait pour paiements instantanés.",
+    "tagline": "Un solde Lightning géré dans un pool de liquidité partagé.",
+    "consensus": "Liquidité coordonnée par un fournisseur · routage Lightning",
+    "bridge": "Natif - règlement Lightning avec retrait on-chain",
+    "body": "Spark permet d'utiliser des soldes adossés à la liquidité Lightning sans gérer de canaux. Les paiements sont automatisés et les fonds restent retirables on-chain à tout moment. Le modèle repose sur un partage de clé entre l'utilisateur et le fournisseur, limitant le contrôle unilatéral tout en simplifiant l'expérience.",
+    "bridgePath": [
+      "BTC",
+      "transaction de financement",
+      "pool Lightning",
+      "solde Spark",
+      "paiement Lightning"
+    ]
+  },
+  {
+    "id": "rgb",
+    "name": "RGB",
+    "learnMore": "https://offchain.media/fr/article/rgb-layer2-bitcoin-ultra-scalable-tres-confidentiel",
+    "short": "Actifs côté client sur Bitcoin et Lightning.",
+    "tagline": "Des smart contracts off-chain.",
+    "consensus": "Validation côté client · sceau cryptographique à usage unique (UTXOs)",
+    "bridge": "Ancré dans les UTXO Bitcoin",
+    "body": "RGB inverse le modèle : l'état des contrats est détenu par leurs propriétaires, et non stocké on-chain. Les UTXO de Bitcoin servent de sceaux à usage unique pour engager des transitions d'état hors chaîne. Cela permet de scaler sans alourdir la blockchain, au prix d'échanges de données en pair-à-pair.",
+    "bridgePath": [
+      "UTXO (scellés)",
+      "engagement",
+      "état client",
+      "transaction RGB"
+    ]
+  },
+  {
+    "id": "fedi",
+    "name": "e-cash",
+    "learnMore": "https://offchain.media/fr/article/ecash-protocole-transactions-confidentielles-david-chaum-bitcoin",
+    "short": "BTC privé pour paiements instantanés.",
+    "tagline": "Argent numérique privé émis par un mint adossé au BTC.",
+    "consensus": "Tokens émis par un mint · signatures chaumiennes",
+    "bridge": "Convertibles en BTC via le mint (souvent via Lightning)",
+    "body": "Les systèmes d’e-cash utilisent des signatures aveugles pour permettre des paiements privés et instantanés en Bitcoin, sans trace on-chain. Les jetons peuvent être reconvertis en BTC via un mint. Cashu repose sur un opérateur unique, tandis que Fedimint distribue la garde entre plusieurs acteurs, réduisant le risque au prix de plus de complexité.",
+    "bridgePath": [
+      "BTC",
+      "dépôt",
+      "token e-cash",
+      "paiement privé"
+    ],
+    "subtitle": "Cashu · Fedimint"
+  },
+  {
+    "id": "ordinals",
+    "name": "Inscriptions",
+    "learnMore": "https://offchain.media/fr/article/ordinals-runes-autres-inscriptions-bitcoin",
+    "short": "Données et tokens on-chain sécurisés par Bitcoin.",
+    "tagline": "Données intégrées directement dans les transactions Bitcoin.",
+    "consensus": "Validation L1 Bitcoin · interprétation d’indexeurs",
+    "bridge": "Natif - directement intégré dans les transactions Bitcoin",
+    "body": "Les inscriptions Bitcoin stockent des données on-chain en utilisant l’espace witness, permettant d’enregistrer de manière permanente des actifs et des métadonnées sur Bitcoin. Les Ordinals associent des données (images, texte, JSON) à des satoshis individuels, permettant la création de NFT et d’artefacts numériques. Les Runes définissent des tokens fongibles à l’aide d’un modèle basé sur les UTXO, conçu pour minimiser l’empreinte on-chain et réduire la complexité des indexeurs.",
+    "bridgePath": [
+      "BTC",
+      "transaction",
+      "inscription",
+      "transfert"
+    ],
+    "subtitle": "Ordinals · Runes"
+  }
+]

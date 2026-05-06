@@ -1,0 +1,20 @@
+---
+const { t } = Astro.props;
+---
+<div class="nav" style="display:none">
+  <button id="tk-open">{t.settingsBtn}</button>
+</div>
+
+<div class="tweaks" id="tweaks">
+  <div class="tk-title">{t.settingsTitle} <span class="close" id="tk-close">×</span></div>
+  <div class="tk-row">
+    <div class="tk-label">{t.edgeStyleLabel}</div>
+    <div class="tk-seg" data-group="edge">
+      <button data-v="straight" class="active">{t.edgeStraight}</button>
+      <button data-v="curved">{t.edgeCurved}</button>
+    </div>
+  </div>
+  <div class="tk-row"><label class="tk-toggle"><span>{t.showLabels}</span><input type="checkbox" id="tk-labels" checked /><span class="sw"></span></label></div>
+  <div class="tk-row"><label class="tk-toggle"><span>{t.categoryRings}</span><input type="checkbox" id="tk-rings" checked /><span class="sw"></span></label></div>
+  <div class="tk-row"><label class="tk-toggle"><span>{t.bgTypo}</span><input type="checkbox" id="tk-bgtype" checked /><span class="sw"></span></label></div>
+</div>

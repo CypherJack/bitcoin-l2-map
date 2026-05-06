@@ -1,0 +1,60 @@
+---
+import en from '../../i18n/en.json';
+import fr from '../../i18n/fr.json';
+import nodesEn from '../../content/nodes.en.json';
+import nodesFr from '../../content/nodes.fr.json';
+
+import Header from '../../components/Header.astro';
+import Stage from '../../components/Stage.astro';
+import Panel from '../../components/Panel.astro';
+import InfoBar from '../../components/InfoBar.astro';
+import Tweaks from '../../components/Tweaks.astro';
+
+import '../../styles/index.css';
+
+const LOCALES = {
+  en: { t: en, nodesContent: nodesEn },
+  fr: { t: fr, nodesContent: nodesFr },
+};
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'fr' } },
+  ];
+}
+
+const { lang } = Astro.params;
+const { t, nodesContent } = LOCALES[lang];
+---
+<!doctype html>
+<html lang={t.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <title>{t.pageTitle}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="app mode-stack" id="app">
+      <Header t={t} />
+      <Stage t={t} />
+      <Panel t={t} />
+      <Tweaks t={t} />
+      <InfoBar t={t} />
+    </div>
+
+    <script is:inline define:vars={{ t, nodesContent }}>
+      window.__APP_DATA__ = { t, nodesContent };
+    </script>
+
+    <script>
+      import '../../scripts/main.js';
+    </script>
+  </body>
+</html>

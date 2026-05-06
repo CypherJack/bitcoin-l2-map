@@ -1,0 +1,23 @@
+/* SVG edges + edge labels */
+.edge {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 1;
+  transition: stroke 200ms ease, stroke-width 200ms ease, opacity 200ms ease;
+}
+.edge.dashed        { stroke-dasharray: 4 4; }
+.edge.dotted        { stroke-dasharray: 1.5 4; }
+.edge.cryptographic { stroke-dasharray: 10 5; }
+.app.has-active .edge { opacity: 0.15; }
+.app.has-active .edge.highlighted { opacity: 1; stroke: var(--cat, var(--fg)); stroke-width: 1.5; }
+
+.edge-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  fill: var(--fg-dimmer);
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+.app.has-active .edge-label.highlighted { opacity: 1; fill: var(--cat, var(--fg-dim)); }

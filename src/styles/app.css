@@ -1,0 +1,13 @@
+/* App grid layout */
+.app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr minmax(25%, 360px);
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header header"
+    "stage  panel"
+    "footer footer";
+}

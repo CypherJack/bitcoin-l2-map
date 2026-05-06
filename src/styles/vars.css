@@ -1,0 +1,40 @@
+/* CSS variables, base reset, body font */
+:root {
+  color-scheme: light dark;
+  --light--background: #ffffff;
+  --dark--background:  hsla(0, 0%, 10%, 1);
+  --light--text:       hsla(0, 0%, 10%, 1);
+  --dark--text:        #ffffff;
+  --bg:         light-dark(var(--light--background), var(--dark--background));
+  --bg-2:       light-dark(#f2f2f2, hsla(0, 0%, 13%, 1));
+  --bg-3:       light-dark(#e6e6e6, hsla(0, 0%, 16%, 1));
+  --line:       light-dark(hsl(0, 0%, 78%), hsl(0, 0%, 20%));
+  --line-strong:light-dark(hsl(0, 0%, 58%), hsl(0, 0%, 30%));
+  --fg:         light-dark(var(--light--text), var(--dark--text));
+  --fg-dim:     light-dark(hsl(0, 0%, 38%), hsl(0, 0%, 66%));
+  --fg-dimmer:  light-dark(hsl(0, 0%, 55%), hsl(0, 0%, 44%));
+  --btc: #f7931a;
+  --cat-channel:     light-dark(oklch(0.45 0.15 230), oklch(0.74 0.13 230));
+  --cat-lightning:   light-dark(oklch(0.55 0.20 85),  oklch(0.82 0.17 95));
+  --cat-sidechain:   light-dark(oklch(0.45 0.15 150), oklch(0.76 0.13 150));
+  --cat-rollup:      light-dark(oklch(0.42 0.22 25),  oklch(0.66 0.20 25));
+  --cat-client:      light-dark(oklch(0.46 0.16 340), oklch(0.72 0.14 340));
+  --cat-ecash:       light-dark(oklch(0.46 0.15 310), oklch(0.74 0.13 310));
+  --cat-inscription: light-dark(oklch(0.48 0.16 55),  oklch(0.76 0.14 55));
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  font-family: 'Spectral', Georgia, serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.55;
+}

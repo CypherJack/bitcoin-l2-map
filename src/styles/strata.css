@@ -1,0 +1,129 @@
+/* Architectural strata + stack mode (Bitcoin / Lightning slabs) */
+.strata {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 300ms ease;
+  z-index: 8;
+}
+.app.mode-stack .strata { opacity: 1; }
+.app.mode-stack .bg-type { opacity: 0; }
+.app.mode-stack .stratum::before { display: none; }
+
+.stratum {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--t) * 100%);
+  height: 1px;
+  display: block;
+}
+.stratum::before {
+  content: '';
+  position: absolute;
+  left: 220px;
+  right: 32px;
+  top: 0;
+  border-top: 1px dashed light-dark(hsl(0, 0%, 72%), hsl(0, 0%, 16%));
+}
+.stratum-rail {
+  position: absolute;
+  left: 16px;
+  top: -14px;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+}
+.stratum .tier-no {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  color: var(--fg);
+  background: var(--bg);
+  padding: 4px 7px;
+  border: 1px solid light-dark(hsl(0, 0%, 62%), hsl(0, 0%, 28%));
+  flex: 0 0 auto;
+}
+.stratum .tier-name {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cat, var(--fg-dim));
+  background: var(--bg);
+  padding: 4px 10px;
+  border: 1px solid color-mix(in oklab, var(--cat, var(--line-strong)) 40%, transparent);
+  white-space: nowrap;
+}
+.stratum .stratum-rail[style*="--cat-lightning"] .tier-name { color: var(--fg); }
+.stratum.bedrock::before {
+  border-top: 1px solid var(--btc);
+  opacity: 0.45;
+}
+.stratum.bedrock .tier-no {
+  color: var(--btc);
+  border-color: hsla(33, 92%, 54%, 0.5);
+}
+.stratum.bedrock .tier-name { color: var(--fg); }
+
+/* Bedrock slab beneath bottom stratum */
+.bedrock-slab {
+  position: absolute;
+  left: 0; right: 0;
+  top: 75%;
+  height: 25%;
+  background: hsla(33, 92%, 54%, 0.05);
+  opacity: 0;
+  transition: opacity 300ms ease;
+  pointer-events: none;
+  border-top: 1px solid hsla(33, 92%, 54%, 0.4);
+}
+.app.mode-stack .bedrock-slab { opacity: 1; }
+
+/* Stack mode: shrink non-btc/ln nodes */
+.app.mode-stack .node:not(.btc):not(.ln) .node-core {
+  width: 56px;
+  height: 56px;
+  font-size: 18px;
+}
+.app.mode-stack .node .node-label .sub { display: none; }
+.app.mode-stack .node .node-label {
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  top: calc(100% + 10px);
+}
+
+/* Lightning as full-width communication rail */
+.app.mode-stack .node.ln .node-core {
+  width: calc(var(--stage-w, 600px) * 0.65);
+  height: 56px;
+  border-radius: 2px;
+  background: light-dark(color-mix(in oklab, var(--cat-lightning) 14%, var(--bg)), color-mix(in oklab, var(--cat-lightning) 3%, var(--bg)));
+  border: 1px solid light-dark(color-mix(in oklab, var(--cat-lightning) 70%, transparent), color-mix(in oklab, var(--cat-lightning) 40%, transparent));
+  box-shadow: none;
+  overflow: hidden;
+  padding: 0;
+}
+.app.mode-stack .node.ln .node-core::before,
+.app.mode-stack .node.ln .node-core::after { display: none; }
+.app.mode-stack .node.ln .node-label { display: none; }
+
+/* Bitcoin as wide blockchain slab */
+.app.mode-stack .node.btc .node-core {
+  width: calc(var(--stage-w, 600px) * 0.8);
+  height: 56px;
+  border-radius: 2px;
+  background: light-dark(color-mix(in oklab, var(--btc) 12%, var(--bg)), color-mix(in oklab, var(--btc) 3%, var(--bg)));
+  border: 1px solid light-dark(color-mix(in oklab, var(--btc) 65%, transparent), color-mix(in oklab, var(--btc) 40%, transparent));
+  box-shadow: none;
+  overflow: hidden;
+  padding: 0;
+}
+.app.mode-stack .node.btc .node-core::after,
+.app.mode-stack .node.btc .node-core::before { display: none; }
+.app.mode-stack .node.btc .node-label { display: none; }

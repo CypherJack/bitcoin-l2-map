@@ -1,0 +1,26 @@
+---
+import { TIERS } from '../content/topology.js';
+
+const { t } = Astro.props;
+---
+<div class="stage" id="stage">
+  <div class="bg-type top">LAYER<br /><em>one.</em></div>
+  <div class="bg-type bottom">LAYERS<br /><em>above.</em></div>
+  <div class="bedrock-slab" aria-hidden="true"></div>
+
+  <div class="strata" id="strata" aria-hidden="true">
+    {TIERS.map((tier) => (
+      <div
+        class={`stratum ${tier.id}${tier.bedrock ? ' bedrock' : ''}`}
+        style={`--t:${tier.row * 0.25 + 0.02}`}
+      >
+        <div class="stratum-rail" style={tier.css ?? undefined}>
+          <span class="tier-name" style={tier.labelStyle ?? undefined} set:html={t.tierLabels[String(tier.key)]} />
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <svg class="edges" id="edges" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div class="nodes-layer" id="nodes"></div>
+</div>

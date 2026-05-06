@@ -1,0 +1,43 @@
+/* Header / masthead / h1 */
+header {
+  grid-area: header;
+  padding: 18px 28px 14px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  background: var(--bg);
+  z-index: 5;
+}
+.masthead {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  font-size: 11px;
+  color: var(--fg-dim);
+  text-transform: uppercase;
+}
+.masthead .rule { color: var(--fg-dimmer); margin: 0 10px; }
+h1 {
+  margin: 4px 0 0;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: 34px;
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+h1 em {
+  font-family: 'Spectral', serif;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--fg-dim);
+}
+.header-meta {
+  text-align: right;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--fg-dimmer);
+  letter-spacing: 0.04em;
+}
+.header-meta .k { color: var(--fg-dim); }

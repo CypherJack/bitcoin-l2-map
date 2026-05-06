@@ -1431,7 +1431,7 @@ const TIERS = [
 
 const TIER_Y = {
   desktop: { label: r => r * 0.25 + 0.02,  node: [0.12, 0.37, 0.62, 0.87] },
-  mobile:  { label: r => [0.02, 0.20, 0.38, 0.74][r],  node: [0.15, 0.40, 0.65, 0.90] }
+  mobile:  { label: r => [0.02, 0.20, 0.46, 0.74][r],  node: [0.15, 0.40, 0.65, 0.90] }
 };
 
 
@@ -1600,21 +1600,60 @@ function updateWideSlabs(stageWidth) {
 }
 
 // ── Layout positions ─────────────────────────────────────────────
+
+// Mobile: top-down fixed-pixel layout.
+// Top 3 tiers are stacked with fixed gaps (no % stretch).
+// BTC stays anchored near the bottom; its label sits between LN and BTC.
+// Returns null on small stages (<420px) → fall back to percentage mode.
+function mobileLayout(H) {
+  if (H < 420) return null;
+  const L2N = 55, NH = 22, SH = 28, GAP = 30;
+
+  const t2L  = 10;
+  const t2N  = t2L  + L2N;                       // 65
+  const t15L = t2N  + NH + GAP;                   // 117
+  const t15N = t15L + L2N;                        // 172
+  const lnL  = t15N + NH + GAP;                   // 224
+  const lnN  = lnL  + L2N;                        // 279
+  const lnB  = lnN  + SH;                         // 307
+
+  const btcN = H * 0.90;
+  const btcL = lnB + (btcN - lnB) * 0.45;        // centered in the gap
+
+  return {
+    labels: [t2L, t15L, lnL, btcL],               // pixels
+    nodes:  [t2N, t15N, lnN, btcN]                 // pixels
+  };
+}
+
 function stackPositions(stageWidth, stageHeight) {
   const pos = {};
   const isMobile = stageWidth && stageWidth < 769;
 
-  // X distribution (unchanged)
+  // X distribution
   const minXNorm = isMobile ? 0.15 : (stageWidth ? (16 + 200 + 28 + 12) / stageWidth : 0.28);
   const maxXNorm = isMobile ? 0.85 : 0.84;
   const colX = (i, n) => minXNorm + (i / (n - 1)) * (maxXNorm - minXNorm);
 
-  // Y positions
-  if (isMobile && stageHeight) {
-    // Mobile: nodes hug their tier label with a fixed pixel gap.
-    // Label bottom ≈ 18px below label top. Gap ≈ 12px. Node half-height ≈ 22px.
-    // So node center = labelTop + 50px (fixed, doesn't scale with stage).
-    // BTC exception: connections arrive from above, keep spacious.
+  const ml = isMobile ? mobileLayout(stageHeight) : null;
+
+  if (ml) {
+    // Fixed-pixel layout — normalize to 0..1
+    pos.btc = { x: 0.50, y: ml.nodes[3] / stageHeight };
+    pos.ln  = { x: 0.50, y: ml.nodes[2] / stageHeight };
+
+    const tier15Order = ['ark', 'spark', 'rgb', 'bitvm', 'ordinals'];
+    const tier15 = tier15Order.filter(id => NODES.find(n => n.id === id));
+    tier15.forEach((id, i) => {
+      pos[id] = { x: colX(i, tier15.length), y: ml.nodes[1] / stageHeight };
+    });
+
+    const tier2 = NODES.filter(n => n.tier === 2).map(n => n.id);
+    tier2.forEach((id, i) => {
+      pos[id] = { x: colX(i, tier2.length), y: ml.nodes[0] / stageHeight };
+    });
+  } else if (isMobile && stageHeight) {
+    // Small stage fallback — percentage + fixed offset
     const LABEL_TO_NODE = 55;
     const labelTopPx = r => TIER_Y.mobile.label(r) * stageHeight;
     const nodeY = r => (labelTopPx(r) + LABEL_TO_NODE) / stageHeight;
@@ -1633,7 +1672,7 @@ function stackPositions(stageWidth, stageHeight) {
       pos[id] = { x: colX(i, tier2.length), y: nodeY(0) };
     });
   } else {
-    // Desktop: percentage-based (unchanged)
+    // Desktop: percentage-based
     const ty = TIER_Y.desktop;
     pos.btc = { x: 0.50, y: ty.node[3] };
     pos.ln  = { x: 0.50, y: ty.node[2] };
@@ -1697,9 +1736,16 @@ function layoutAll() {
   const isMobile = width < 769;
 
   // Update strata positions from JS (single source of truth)
+  const ml = isMobile ? mobileLayout(height) : null;
   TIERS.forEach(t => {
     const el = document.querySelector(`.stratum.${t.id}`);
-    if (el) el.style.setProperty('--t', TIER_Y[isMobile ? 'mobile' : 'desktop'].label(t.row));
+    if (!el) return;
+    if (ml) {
+      // Fixed-pixel layout — convert to normalized --t
+      el.style.setProperty('--t', ml.labels[t.row] / height);
+    } else {
+      el.style.setProperty('--t', TIER_Y[isMobile ? 'mobile' : 'desktop'].label(t.row));
+    }
   });
 
   const norm = stackPositions(width, height);

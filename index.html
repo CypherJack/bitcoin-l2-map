@@ -1238,6 +1238,7 @@ const CATEGORIES = {
 const NODES = [
   {
     id: 'btc',
+    learnMore: 'https://offchain.media/article/what-bitcoin-digital-currency-competing-central-banks',
     tier: 1,
     name: 'Bitcoin',
     symbol: '₿',
@@ -1251,6 +1252,7 @@ const NODES = [
   },
   {
     id: 'ln',
+    learnMore: 'https://offchain.media/article/what-is-lightning-network-bitcoin',
     tier: 'ln',
     name: 'Lightning',
     symbol: '⚡',
@@ -1264,6 +1266,7 @@ const NODES = [
   },
   {
     id: 'liquid',
+    learnMore: 'https://offchain.media/article/liquid-network-bitcoins-private-scalable-sidechain',
     tier: 2,
     name: 'Liquid',
     symbol: 'L-BTC',
@@ -1277,6 +1280,7 @@ const NODES = [
   },
   {
     id: 'rsk',
+    learnMore: 'https://offchain.media/article/what-rootstock-bitcoin-sidechain-smart-contracts',
     tier: 2,
     name: 'Rootstock',
     symbol: 'RBTC',
@@ -1290,6 +1294,7 @@ const NODES = [
   },
   {
     id: 'ark',
+    learnMore: 'https://offchain.media/article/what-ark-protocol-missing-piece-make-bitcoin-scalable-everyday-currency',
     tier: 15,
     name: 'Ark',
     symbol: 'A',
@@ -1303,6 +1308,7 @@ const NODES = [
   },
   {
     id: 'citrea',
+    learnMore: 'https://offchain.media/article/what-citrea-bitcoin-rollup-powered-bitvm',
     tier: 2,
     name: 'Citrea',
     symbol: 'ZK',
@@ -1316,6 +1322,7 @@ const NODES = [
   },
   {
     id: 'bitvm',
+    learnMore: 'https://offchain.media/article/bitvm-protocol-enables-layer-2-rollups-on-bitcoin',
     tier: 15,
     name: 'BitVM',
     symbol: '∿',
@@ -1329,6 +1336,7 @@ const NODES = [
   },
   {
     id: 'spark',
+    learnMore: 'https://offchain.media/article/spark-protocol-bitcoin-layer2-simplifies-btc-ownership-significant-trade-offs',
     tier: 15,
     name: 'Spark',
     symbol: '✦',
@@ -1355,6 +1363,7 @@ const NODES = [
   },
   {
     id: 'fedi',
+    learnMore: 'https://offchain.media/article/what-ecash-david-chaums-confidential-transaction-protocol-bitcoin',
     tier: 2,
     name: 'e-cash',
     symbol: 'E',
@@ -1369,6 +1378,7 @@ const NODES = [
   },
   {
     id: 'ordinals',
+    learnMore: 'https://offchain.media/article/what-ordinals-runes-other-inscriptions-on-bitcoin',
     tier: 15,
     name: 'Inscriptions',
     symbol: '◉',
@@ -1421,7 +1431,7 @@ const TIERS = [
 
 const TIER_Y = {
   desktop: { label: r => r * 0.25 + 0.02,  node: [0.12, 0.37, 0.62, 0.87] },
-  mobile:  { label: r => r * 0.25 + 0.02,  node: [0.15, 0.40, 0.65, 0.90] }
+  mobile:  { label: r => [0.02, 0.20, 0.46, 0.74][r],  node: [0.15, 0.40, 0.65, 0.90] }
 };
 
 
@@ -1605,8 +1615,8 @@ function stackPositions(stageWidth, stageHeight) {
     // Label bottom ≈ 18px below label top. Gap ≈ 12px. Node half-height ≈ 22px.
     // So node center = labelTop + 50px (fixed, doesn't scale with stage).
     // BTC exception: connections arrive from above, keep spacious.
-    const LABEL_TO_NODE = 50;
-    const labelTopPx = r => (r * 0.25 + 0.02) * stageHeight;
+    const LABEL_TO_NODE = 55;
+    const labelTopPx = r => TIER_Y.mobile.label(r) * stageHeight;
     const nodeY = r => (labelTopPx(r) + LABEL_TO_NODE) / stageHeight;
 
     pos.btc = { x: 0.50, y: 0.90 };
@@ -1727,16 +1737,18 @@ function drawEdges() {
   const nodeR = 42;
 
   // Label zones — y-band between strata where labels should sit
+  const isMobile = width < 769;
+  const lnTierLabelY = TIER_Y[isMobile ? 'mobile' : 'desktop'].label(2) * height;
   const ZONE = {
     // Between LN slab bottom (top of band) and BTC slab top (bottom of band)
     btc_up: {
       yMin: lnPx.y + slabHalfH + 6,
       yMax: btcPx.y - slabHalfH - 6,
     },
-    // Between Native Primitives node bottoms and LN slab top
+    // Between Native Primitives node bottoms and LN tier label
     ln_up: {
       yMin: Y_NP + nodeR + 6,
-      yMax: lnPx.y - slabHalfH - 6,
+      yMax: Math.min(lnPx.y - slabHalfH - 6, lnTierLabelY - 16),
     },
   };
 

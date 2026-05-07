@@ -1,12 +1,18 @@
 ---
-const { t } = Astro.props;
+import type { Strings } from '../types';
+const { t } = Astro.props as { t: Strings };
 ---
+<input type="checkbox" id="tk-open-toggle" hidden />
+
 <div class="nav" style="display:none">
-  <button id="tk-open">{t.settingsBtn}</button>
+  <label class="tk-open-btn" for="tk-open-toggle">{t.settingsBtn}</label>
 </div>
 
 <div class="tweaks" id="tweaks">
-  <div class="tk-title">{t.settingsTitle} <span class="close" id="tk-close">×</span></div>
+  <div class="tk-title">
+    {t.settingsTitle}
+    <label class="close" for="tk-open-toggle">×</label>
+  </div>
   <div class="tk-row">
     <div class="tk-label">{t.edgeStyleLabel}</div>
     <div class="tk-seg" data-group="edge">

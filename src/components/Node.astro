@@ -1,0 +1,34 @@
+---
+import { renderBtcSlab, renderLnMesh } from '../scripts/slabs';
+import { ICONS } from '../logos/icons';
+import type { NodeMeta } from '../types';
+
+interface Props {
+  meta: NodeMeta;
+  name: string;
+  catLabel?: string;
+  catCss?: string;
+}
+
+const { meta, name, catLabel, catCss } = Astro.props;
+
+const classes = ['node'];
+if (meta.id === 'btc') classes.push('btc');
+if (meta.id === 'ln')  classes.push('ln');
+
+let style: string | undefined;
+if (meta.id === 'ln') style = '--cat: var(--cat-lightning)';
+else if (catCss)      style = `--cat: var(${catCss})`;
+
+let core: string;
+if (meta.id === 'btc')      core = renderBtcSlab(460);
+else if (meta.id === 'ln')  core = renderLnMesh(460);
+else if (ICONS[meta.id])    core = ICONS[meta.id];
+else                        core = meta.symbol;
+
+const sub = meta.id === 'btc' ? 'Layer 1' : (catLabel ?? '');
+---
+<div class={classes.join(' ')} data-id={meta.id} style={style}>
+  <div class="node-core" set:html={core} />
+  <div class="node-label">{name}<span class="sub">{sub}</span></div>
+</div>

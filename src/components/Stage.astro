@@ -1,7 +1,17 @@
 ---
-import { TIERS } from '../content/topology.js';
+import { CATEGORY_CSS, NODE_META, TIERS } from '../content/topology';
+import type { NodeContent, Strings } from '../types';
+import Node from './Node.astro';
 
-const { t } = Astro.props;
+interface Props {
+  t: Strings;
+  nodesContent: NodeContent[];
+}
+const { t, nodesContent } = Astro.props;
+
+const nameById: Record<string, string> = Object.fromEntries(
+  nodesContent.map((n) => [n.id, n.name])
+);
 ---
 <div class="stage" id="stage">
   <div class="bg-type top">LAYER<br /><em>one.</em></div>
@@ -15,12 +25,26 @@ const { t } = Astro.props;
         style={`--t:${tier.row * 0.25 + 0.02}`}
       >
         <div class="stratum-rail" style={tier.css ?? undefined}>
-          <span class="tier-name" style={tier.labelStyle ?? undefined} set:html={t.tierLabels[String(tier.key)]} />
+          <span
+            class="tier-name"
+            style={tier.labelStyle ?? undefined}
+            set:html={t.tierLabels[String(tier.key)]}
+          />
         </div>
       </div>
     ))}
   </div>
 
   <svg class="edges" id="edges" xmlns="http://www.w3.org/2000/svg"></svg>
-  <div class="nodes-layer" id="nodes"></div>
+
+  <div class="nodes-layer" id="nodes">
+    {NODE_META.map((meta) => (
+      <Node
+        meta={meta}
+        name={nameById[meta.id] ?? meta.id}
+        catLabel={meta.category ? t.categories[meta.category] : undefined}
+        catCss={meta.category ? CATEGORY_CSS[meta.category] : undefined}
+      />
+    ))}
+  </div>
 </div>

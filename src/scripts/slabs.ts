@@ -1,9 +1,7 @@
-// Wide-slab generators for the Bitcoin and Lightning nodes in stack mode.
-// Each returns an SVG string that fills the slab width.
+// Pure SVG generators for the wide BTC and LN slabs.
+// No DOM access — safe to import from Astro components at build time.
 
-import { nodesLayer } from './data.js';
-
-export function renderBtcSlab(width) {
+export function renderBtcSlab(width: number): string {
   const bw = 58, bh = 32, gap = 14, startX = 10, cy = 28;
   const firstBlock = 886421;
   const hashes = ['3f9a…c1d2','a7c1…b89f','d4e2…07fa','5b3c…e41a','9f1d…a35c','8e4a…2f1b','c2d7…6b4e','f8a1…9c3d','b6e3…4a2c','7d9f…1b5e','e2c4…8f3a','4a8b…d7c1'];
@@ -27,7 +25,7 @@ export function renderBtcSlab(width) {
   return svg;
 }
 
-export function renderLnMesh(width) {
+export function renderLnMesh(width: number): string {
   const c = 'oklch(0.82 0.17 95)';
   const halfPeriod = 34;
   const padX = 20;
@@ -36,11 +34,11 @@ export function renderLnMesh(width) {
   if (groupCount % 2 === 0) groupCount -= 1;
   const totalW = (groupCount - 1) * halfPeriod;
   const startX = (width - totalW) / 2;
-  const groups = [];
-  const lnNodes = [];
+  const groups: number[][] = [];
+  const lnNodes: Array<{ x: number; y: number }> = [];
   for (let i = 0; i < groupCount; i++) {
     const x = startX + i * halfPeriod;
-    const group = [];
+    const group: number[] = [];
     if (i % 2 === 0) {
       group.push(lnNodes.length);
       lnNodes.push({ x, y: 28 });
@@ -52,7 +50,7 @@ export function renderLnMesh(width) {
     }
     groups.push(group);
   }
-  const channels = [];
+  const channels: Array<[number, number]> = [];
   for (let g = 0; g < groups.length - 1; g++) {
     groups[g].forEach((a) => {
       groups[g + 1].forEach((b) => {
@@ -70,12 +68,4 @@ export function renderLnMesh(width) {
   });
   svg += `</svg>`;
   return svg;
-}
-
-export function updateWideSlabs(stageWidth) {
-  const slabWidth = Math.max(200, Math.round(stageWidth * 0.8));
-  const ln  = nodesLayer.querySelector('[data-id="ln"] .node-core');
-  const btc = nodesLayer.querySelector('[data-id="btc"] .node-core');
-  if (ln)  ln.innerHTML  = renderLnMesh(slabWidth);
-  if (btc) btc.innerHTML = renderBtcSlab(slabWidth);
 }

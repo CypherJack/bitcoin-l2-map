@@ -1,7 +1,35 @@
 ---
-const { t } = Astro.props;
+import { CATEGORY_CSS, NODE_META } from '../content/topology';
+import type { NodeContent, Strings } from '../types';
+import PanelDetail from './PanelDetail.astro';
+import PanelEmpty from './PanelEmpty.astro';
+
+interface Props {
+  t: Strings;
+  nodesContent: NodeContent[];
+}
+const { t, nodesContent } = Astro.props;
+
+const contentById: Record<string, NodeContent> = Object.fromEntries(
+  nodesContent.map((n) => [n.id, n])
+);
 ---
 <aside class="panel" id="panel">
   <button class="panel-close" id="panel-close" aria-label={t.closeLabel}>✕</button>
-  <div class="panel-inner" id="panel-inner"></div>
+  <div class="panel-inner" id="panel-inner">
+    <PanelEmpty t={t} />
+    {NODE_META.map((meta) => {
+      const content = contentById[meta.id];
+      if (!content) return null;
+      return (
+        <PanelDetail
+          meta={meta}
+          content={content}
+          t={t}
+          catCss={meta.category ? CATEGORY_CSS[meta.category] : null}
+          catLabel={meta.category ? t.categories[meta.category] : null}
+        />
+      );
+    })}
+  </div>
 </aside>

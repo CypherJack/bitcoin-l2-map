@@ -1,0 +1,17 @@
+---
+import type { Strings } from '../types';
+const { t } = Astro.props as { t: Strings };
+---
+<div class="panel-empty">
+  <div class="empty">
+    <h3>{t.readMap}</h3>
+    <p>{t.readMapBody}<em>{t.readMapEm}</em>.</p>
+    <div class="legend">
+      <h3>{t.legendTitle}</h3>
+      <div class="legend-row"><svg width="40" height="6"><line x1="0" y1="3" x2="40" y2="3" stroke="#aaa" stroke-width="1" /></svg><span>{t.legendNative}</span></div>
+      <div class="legend-row"><svg width="40" height="6"><line x1="0" y1="3" x2="40" y2="3" stroke="#aaa" stroke-width="1" stroke-dasharray="4 4" /></svg><span>{t.legendFederated}</span></div>
+      <div class="legend-row"><svg width="40" height="6"><line x1="0" y1="3" x2="40" y2="3" stroke="#aaa" stroke-width="1" stroke-dasharray="1.5 4" /></svg><span>{t.legendLN}</span></div>
+      <div class="legend-row"><svg width="40" height="6"><line x1="0" y1="3" x2="40" y2="3" stroke="#aaa" stroke-width="1" stroke-dasharray="10 5" /></svg><span>{t.legendCrypto}</span></div>
+    </div>
+  </div>
+</div>

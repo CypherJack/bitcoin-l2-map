@@ -11,7 +11,8 @@
   display: none;
   font-family: 'Spectral', serif;
 }
-.tweaks.open { display: block; }
+.app:has(#tk-open-toggle:checked) .tweaks { display: block; }
+.tk-open-btn { cursor: pointer; }
 .tweaks .tk-title {
   font-family: 'Oswald', sans-serif;
   font-weight: 600;

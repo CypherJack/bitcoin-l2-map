@@ -1,0 +1,59 @@
+---
+import { DETAILS } from '../logos/details';
+import type { CategoryKey, NodeContent, NodeMeta, Strings } from '../types';
+
+interface Props {
+  meta: NodeMeta;
+  content: NodeContent;
+  t: Strings;
+  catCss: string | null;
+  catLabel: string | null;
+}
+
+const { meta, content, t, catCss, catLabel } = Astro.props;
+
+const catColor = catCss ? `var(${catCss})` : 'var(--btc)';
+const tagText = meta.id === 'btc' ? t.l1Tag : (catLabel ?? '');
+const detail = DETAILS[meta.id];
+const paragraphs = content.body.split('\n\n');
+---
+<div
+  class="panel-detail"
+  data-id={meta.id}
+  style={`--cat: ${catColor}`}
+  hidden
+>
+  <div class="tag" style={`border-color:${catColor}; color:${catColor};`}>{tagText}</div>
+  <h2>{content.name}</h2>
+  {content.subtitle && <div class="subtitle">{content.subtitle}</div>}
+  <div class="tagline">{content.tagline}</div>
+  <div class="logo-slot">
+    {detail
+      ? <img class="detail-logo" src={detail.src} alt={`${detail.alt} logo`} />
+      : <span>[ {content.name} ]</span>}
+  </div>
+  {paragraphs.map((p, i) => (
+    <p class={'body' + (i > 0 ? ' body-cont' : '')}>{p}</p>
+  ))}
+  <a class="read-more" href={content.learnMore || '#'} target="_blank" rel="noopener">
+    {t.readMore} {content.name} →
+  </a>
+  <dl class="specs">
+    <dt>{t.roleLabel}</dt><dd>{content.short}</dd>
+    <dt>{t.consensusLabel}</dt><dd class="mono">{content.consensus}</dd>
+    {content.bridge && <><dt>{t.bridgeLabel}</dt><dd>{content.bridge}</dd></>}
+  </dl>
+  {content.bridgePath && (
+    <div class="bridge-line">
+      <div class="lbl">{t.pegMechanism}</div>
+      <div class="bridge-diagram">
+        {content.bridgePath.map((hop, i) => (
+          <>
+            <div class={'hop' + (i === 0 ? ' btc' : '')}>{hop}</div>
+            {i < content.bridgePath!.length - 1 && <div class="arrow" />}
+          </>
+        ))}
+      </div>
+    </div>
+  )}
+</div>

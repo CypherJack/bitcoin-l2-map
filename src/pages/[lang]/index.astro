@@ -10,11 +10,14 @@ import Panel from '../../components/Panel.astro';
 import InfoBar from '../../components/InfoBar.astro';
 import Tweaks from '../../components/Tweaks.astro';
 
+import type { NodeContent, Strings } from '../../types';
 import '../../styles/index.css';
 
-const LOCALES = {
-  en: { t: en, nodesContent: nodesEn },
-  fr: { t: fr, nodesContent: nodesFr },
+type Lang = 'en' | 'fr';
+
+const LOCALES: Record<Lang, { t: Strings; nodesContent: NodeContent[] }> = {
+  en: { t: en as Strings, nodesContent: nodesEn as NodeContent[] },
+  fr: { t: fr as Strings, nodesContent: nodesFr as NodeContent[] },
 };
 
 export function getStaticPaths() {
@@ -24,7 +27,7 @@ export function getStaticPaths() {
   ];
 }
 
-const { lang } = Astro.params;
+const lang = Astro.params.lang as Lang;
 const { t, nodesContent } = LOCALES[lang];
 ---
 <!doctype html>
@@ -43,8 +46,8 @@ const { t, nodesContent } = LOCALES[lang];
   <body>
     <div class="app mode-stack" id="app">
       <Header t={t} />
-      <Stage t={t} />
-      <Panel t={t} />
+      <Stage t={t} nodesContent={nodesContent} />
+      <Panel t={t} nodesContent={nodesContent} />
       <Tweaks t={t} />
       <InfoBar t={t} />
     </div>
@@ -54,7 +57,7 @@ const { t, nodesContent } = LOCALES[lang];
     </script>
 
     <script>
-      import '../../scripts/main.js';
+      import '../../scripts/main';
     </script>
   </body>
 </html>

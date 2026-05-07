@@ -1,0 +1,14 @@
+/* Map-level CSS-only toggles driven by the (hidden) checkboxes in Tweaks.astro.
+   `:has()` is supported in all modern engines (Chrome 105+, Firefox 121+, Safari 15.4+). */
+
+.app:has(#tk-labels:not(:checked)) .node-label    { display: none; }
+.app:has(#tk-rings:not(:checked))  .node-core::after { display: none; }
+.app:has(#tk-bgtype:not(:checked)) .bg-type        { display: none; }
+
+/* Panel detail visibility: 11 details + 1 empty are pre-rendered as static HTML.
+   JS only toggles the `hidden` attribute on the active detail and on .panel-empty. */
+
+.panel-inner > .panel-detail[hidden],
+.panel-inner > .panel-empty[hidden] {
+  display: none;
+}

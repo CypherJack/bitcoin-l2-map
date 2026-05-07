@@ -2,11 +2,12 @@
 // Static markup (nodes, panel details, empty state) comes from Astro.
 
 import { layoutAll } from './nodes';
-import { attachInteractions } from './interaction';
+import { attachInteractions, attachInfoBar } from './interaction';
 import { attachTweaks } from './tweaks';
 import { watchHeight } from './iframe';
 
 attachInteractions();
+attachInfoBar();
 attachTweaks();
 layoutAll();
 
@@ -15,5 +16,7 @@ window.addEventListener('resize', () => {
   if (resizeTimer) clearTimeout(resizeTimer);
   resizeTimer = setTimeout(layoutAll, 80);
 });
+
+window.addEventListener('layout-needed', layoutAll);
 
 watchHeight();

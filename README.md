@@ -78,7 +78,7 @@ src/
 │   ├── Panel.astro           ← right-side detail panel shell
 │   ├── PanelDetail.astro     ← one node's full panel content (pre-rendered, hidden by default)
 │   ├── PanelEmpty.astro      ← default "select a node" state
-│   ├── InfoBar.astro         ← legend bar at the bottom
+│   ├── InfoBar.astro         ← collapsible "Reading the map / Edge legend" tab strip (mobile only, above the stage)
 │   └── Tweaks.astro          ← settings popup (edge style, toggles)
 │
 ├── styles/                   ← CSS split by concern
@@ -129,6 +129,9 @@ The only things that still need JavaScript at runtime are:
 - **SVG edge drawing** — paths between nodes require computed coordinates
 - **Edge style switching** — curved vs. straight requires redrawing SVG paths
 - **Node selection** — toggling the active node and showing the correct panel detail
+- **Info bar tabs** — the collapsible tab strip on mobile is toggled by JS (it triggers a full re-layout so the stage recalculates its available height)
+
+**Mobile interaction model** differs from desktop. On desktop, hovering a node highlights its edges and pre-fills the panel; clicking opens the panel. On mobile (≤ 768 px) there is no hover, so the flow is two-step: the first tap highlights the node and its connections and shows a small **READ MORE →** / **LIRE PLUS →** button (coloured in the node's category colour) positioned near the node. Tapping that button — or tapping the same node a second time — opens the full-screen panel. Tapping empty stage space clears the selection.
 
 Labels, rings, the bgtype overlay, and the tweaks panel open/close are all CSS-only, driven by hidden checkboxes and [`:has()`](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors/Using_the_has_pseudo-class) selectors in `toggles.css`.
 
@@ -291,10 +294,11 @@ The TypeScript in `src/scripts/` is split by responsibility:
 |---|---|---|
 | Node positions (x/y percent by tier) | `nodes.ts` | `layoutAll()` |
 | How SVG edges are drawn and labeled | `edges.ts` | `drawEdges()` |
-| What happens when you click a node | `interaction.ts` | `attachInteractions()` |
+| Click/tap interactions, mobile CTA | `interaction.ts` | `attachInteractions()` |
+| Info bar tab expand/collapse (mobile) | `interaction.ts` | `attachInfoBar()` |
 | Which panel detail becomes visible | `panel.ts` | `showPanelDetail(id)` |
-| The Bitcoin block slab visual | `slabs.ts` | `renderBtcSlab(width)` |
-| The Lightning mesh visual | `slabs.ts` | `renderLnMesh(width)` |
+| The Bitcoin block slab visual | `slabs.ts` | `renderBtcSlab(width, height)` |
+| The Lightning mesh visual | `slabs.ts` | `renderLnMesh(width, height)` |
 | Edge style segmented control | `tweaks.ts` | `attachTweaks()` |
 | Typed DOM element references | `dom.ts` | named exports |
 | Runtime data (NODES, EDGES, state…) | `data.ts` | named exports |

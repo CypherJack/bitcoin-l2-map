@@ -29,12 +29,11 @@ export function drawEdges(): void {
   const btcPx = state.px['btc'], lnPx = state.px['ln'];
   if (!btcPx || !lnPx) { syncHighlight(null); return; }
 
-  const slabHalfW = width * 0.4;
-  const slabHalfH = 28;
+  const isMobile = width < 769;
+  const slabHalfW = isMobile ? width * 0.9 : width * 0.4;
+  const slabHalfH = isMobile ? 22 : 28;
   const Y_NP = 0.37 * height;
   const nodeR = 42;
-
-  const isMobile = width < 769;
   const lnTierLabelY = TIER_Y[isMobile ? 'mobile' : 'desktop'].label(2) * height;
   const ZONE = {
     btc_up: {

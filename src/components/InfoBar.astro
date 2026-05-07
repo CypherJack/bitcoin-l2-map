@@ -2,12 +2,18 @@
 const { t } = Astro.props;
 ---
 <div class="info-bar" id="info-bar">
-  <div class="info-bar-col">
-    <h3>{t.readMap}</h3>
-    <p>{t.readMapBody}<em>{t.readMapEm}</em>.</p>
+  <div class="info-tabs">
+    <button class="info-tab" data-ib="read" aria-expanded="false">
+      <span>{t.readMap}</span><span class="info-tab-arrow" aria-hidden="true">▾</span>
+    </button>
+    <button class="info-tab" data-ib="legend" aria-expanded="false">
+      <span>{t.legendTitle}</span><span class="info-tab-arrow" aria-hidden="true">▾</span>
+    </button>
   </div>
-  <div class="info-bar-col">
-    <h3>{t.legendTitle}</h3>
+  <div class="info-panel" id="ib-read" hidden>
+    <p class="ib-body">{t.readMapBody}<em>{t.readMapEm}</em>.</p>
+  </div>
+  <div class="info-panel" id="ib-legend" hidden>
     <div class="legend-row"><svg width="32" height="6"><line x1="0" y1="3" x2="32" y2="3" stroke="#aaa" stroke-width="1" /></svg><span>{t.legendNative}</span></div>
     <div class="legend-row"><svg width="32" height="6"><line x1="0" y1="3" x2="32" y2="3" stroke="#aaa" stroke-width="1" stroke-dasharray="4 4" /></svg><span>{t.legendFederated}</span></div>
     <div class="legend-row"><svg width="32" height="6"><line x1="0" y1="3" x2="32" y2="3" stroke="#aaa" stroke-width="1" stroke-dasharray="1.5 4" /></svg><span>{t.legendLN}</span></div>

@@ -43,24 +43,42 @@ function applyPositions(): void {
   });
 }
 
-function updateWideSlabs(stageWidth: number): void {
+function updateWideSlabs(stageWidth: number, isMobile: boolean): void {
+  const slabHeight = isMobile ? 44 : 56;
   const slabWidth = Math.max(200, Math.round(stageWidth * 0.8));
   const ln  = nodesLayer.querySelector<HTMLElement>('[data-id="ln"] .node-core');
   const btc = nodesLayer.querySelector<HTMLElement>('[data-id="btc"] .node-core');
-  if (ln)  ln.innerHTML  = renderLnMesh(slabWidth);
-  if (btc) btc.innerHTML = renderBtcSlab(slabWidth);
+  if (ln)  ln.innerHTML  = renderLnMesh(slabWidth, slabHeight);
+  if (btc) btc.innerHTML = renderBtcSlab(slabWidth, slabHeight);
 }
 
 export function layoutAll(): void {
   const { width, height } = stage.getBoundingClientRect();
   stage.style.setProperty('--stage-w', width + 'px');
   const isMobile = width < 769;
+  const TY = TIER_Y[isMobile ? 'mobile' : 'desktop'];
 
   // Strata positions are driven by JS so mobile/desktop bands match the node grid.
   TIERS.forEach((t) => {
     const el = document.querySelector<HTMLElement>(`.stratum.${t.id}`);
-    if (el) el.style.setProperty('--t', String(TIER_Y[isMobile ? 'mobile' : 'desktop'].label(t.row)));
+    if (el) el.style.setProperty('--t', String(TY.label(t.row)));
   });
+
+  // Bedrock amber: on mobile, anchored to the bottom with a fixed 20% height so it
+  // always hugs the page bottom. Desktop fills from the BTC stratum label to bottom.
+  const bedrockEl = document.querySelector<HTMLElement>('.bedrock-slab');
+  if (bedrockEl) {
+    if (isMobile) {
+      bedrockEl.style.top    = 'auto';
+      bedrockEl.style.bottom = '0';
+      bedrockEl.style.height = '20%';
+    } else {
+      const btcTop = TY.label(3);
+      bedrockEl.style.top    = (btcTop * 100) + '%';
+      bedrockEl.style.bottom = 'auto';
+      bedrockEl.style.height = ((1 - btcTop) * 100) + '%';
+    }
+  }
 
   const norm = stackPositions(width);
   NODES.forEach((n) => {
@@ -68,6 +86,6 @@ export function layoutAll(): void {
     state.px[n.id] = { x: p.x * width, y: p.y * height };
   });
   applyPositions();
-  updateWideSlabs(width);
+  updateWideSlabs(width, isMobile);
   drawEdges();
 }

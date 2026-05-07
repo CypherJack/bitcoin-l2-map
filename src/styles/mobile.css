@@ -9,25 +9,32 @@
   display: none;
 }
 
+/* ---- NODE CTA (mobile tap-to-explore button, hidden on desktop) ---- */
+.node-cta {
+  display: none;
+}
+
 /* ---- MOBILE ---- */
 @media (max-width: 768px) {
+  /* Page scrolls naturally — override desktop height:100%+overflow:hidden from vars.css */
   html,
   body {
-    height: 100%;
-    overflow: hidden;
+    height: auto;
+    min-height: 100%;
+    overflow-y: auto;
   }
 
   .app {
     position: relative;
     inset: auto;
-    height: 100%;
-    min-height: 0;
+    height: auto;
+    min-height: 100svh;
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: auto auto minmax(640px, 1fr);
     grid-template-areas:
       "header"
-      "stage"
-      "info-bar";
+      "info-bar"
+      "stage";
   }
 
   .panel {
@@ -143,33 +150,54 @@
     top: calc(100% + 8px);
   }
 
-  /* info-bar: compact row, no scroll */
+  /* info-bar: collapsible tab strip above the stage */
   .info-bar {
-    display: flex !important;
-    flex-direction: row !important;
-    overflow: hidden;
-    max-height: none;
-    border-top: 1px solid var(--line);
-    gap: 0;
+    display: flex;
   }
-  .info-bar-col {
-    border-right: 1px solid var(--line);
-    border-bottom: none;
-    padding: 8px 10px;
+
+  /* Reduce slab heights on mobile (44px vs 56px desktop) */
+  .app.mode-stack .node.btc .node-core,
+  .app.mode-stack .node.ln .node-core {
+    height: 44px;
   }
-  .info-bar-col:last-child { border-right: none; }
-  .info-bar-col h3 {
-    font-size: 9px;
-    margin: 0 0 4px;
+
+  /* Header: break subtitle onto its own line, smaller */
+  h1 {
+    font-size: 26px;
   }
-  .info-bar-col p {
-    font-size: 11px;
-    line-height: 1.35;
+
+  h1 em {
+    display: block;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    margin-top: 2px;
   }
-  .info-bar-col .legend-row {
+
+  /* Node CTA: appears below a tapped node, coloured per category */
+  .node-cta {
+    display: block;
+    position: absolute;
+    transform: translateX(-50%);
+    z-index: 50;
+    padding: 5px 12px;
+    font-family: 'Oswald', sans-serif;
     font-size: 10px;
-    margin-bottom: 2px;
-    gap: 5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background: var(--bg);
+    border: 1px solid var(--cta-color, currentColor);
+    color: var(--cta-color, var(--fg));
+    border-radius: 2px;
+    cursor: pointer;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+  }
+
+  .node-cta.visible {
+    opacity: 1;
+    pointer-events: auto;
   }
 
   /* Strata mobile positions are set by JS (see TIERS + layoutAll) */

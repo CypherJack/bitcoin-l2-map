@@ -61,5 +61,5 @@ export const TIERS: Tier[] = [
 export const TIER_Y = {
   desktop: { label: (r: number) => r * 0.25 + 0.02, node: [0.12, 0.37, 0.62, 0.87] as const },
   // Mobile: weighted bands 20/20/30/30, each split 25% label / 50% node / 25% connections
-  mobile:  { label: (r: number) => [0.02, 0.22, 0.42, 0.60][r], node: [0.10, 0.30, 0.50, 0.75] as const },
+  mobile:  { label: (r: number) => [0.02, 0.20, 0.44, 0.80][r], node: [0.10, 0.28, 0.52, 0.88] as const },
 };
